@@ -55,9 +55,14 @@ namespace EscapeRoomRedi
                         break;
                 }
                 Kartta.TulostaPohja();
-                if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys]== 'X')
+                if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys] == 'X')
                 {
                     Kartta.SeuraavaTaso();
+                }
+                else if ("abcdef".Contains(Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys]))
+                {
+                    Pelaaja.Ostoskärry.LisääAvain(Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys]);
+                    Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys] = ' ';
                 }
             }
 
