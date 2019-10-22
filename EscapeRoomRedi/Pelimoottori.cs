@@ -25,35 +25,7 @@ namespace EscapeRoomRedi
             Näppäin n = new Näppäin();
             char merkki = n.LueNäppäin();
             if (merkki == 'x') { break; }
-                switch (merkki)
-                {
-                    case 'w': 
-                        if (Kartta.Pohja[Pelaaja.Korkeus-1, Pelaaja.Leveys]!='#')
-                        {
-                        Pelaaja.Ylös();
-                        }
-                        break;
-                    case 's':
-                        if (Kartta.Pohja[Pelaaja.Korkeus + 1, Pelaaja.Leveys] != '#')
-                        {
-                            Pelaaja.Alas();
-                        }
-                        break;
-                    case 'a':
-                        if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys -1] != '#')
-                        {
-                            Pelaaja.Vasen();
-                        }
-                        break;
-                    case 'd':
-                        if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys +1] != '#')
-                        {
-                            Pelaaja.Oikea();
-                        }
-                        break;
-                    default:
-                        break;
-                }
+                LiikutaPelaajaa(merkki);
                 Kartta.TulostaPohja();
                 if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys] == 'X')
                 {
@@ -66,6 +38,43 @@ namespace EscapeRoomRedi
                 }
             }
 
+        }
+
+        private void LiikutaPelaajaa(char näppäin)
+        {
+            
+            
+                switch (näppäin)
+                {
+                    case 'w':
+                        if (!Kartta.Esteet.Contains(Kartta.Pohja[Pelaaja.Korkeus - 1, Pelaaja.Leveys]) )
+                        {
+                            Pelaaja.Ylös();
+                        }
+                        break;
+                case 's':
+                    if (!Kartta.Esteet.Contains(Kartta.Pohja[Pelaaja.Korkeus + 1, Pelaaja.Leveys]))
+                    {
+                        Pelaaja.Alas();
+                    }
+                    break;
+                case 'a':
+                    if (!Kartta.Esteet.Contains(Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys - 1]))
+                    {
+                        Pelaaja.Vasen();
+                    }
+                    break;
+                case 'd':
+                    if (!Kartta.Esteet.Contains(Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys + 1]))
+                    {
+                        Pelaaja.Oikea();
+                    }
+                    break;
+                default:
+                    break;
+            }
+            
+            
         }
     }
 }

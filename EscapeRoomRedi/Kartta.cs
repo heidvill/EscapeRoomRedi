@@ -10,11 +10,13 @@ namespace EscapeRoomRedi
         public char[,] Pohja { get; set; }
         public Pelaaja Pelaaja { get; set; }
         public int Taso { get; set; } = 1;
+        public List<char> Esteet { get; set; }
         private string polku;
         public Kartta()
         {
             polku = "../../../Taso1.txt";
             Pelaaja = new Pelaaja();
+            Esteet = new List<char> {'#', '@'};
         }
 
         public void LueKartta()
