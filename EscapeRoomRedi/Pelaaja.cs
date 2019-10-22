@@ -9,6 +9,9 @@ namespace EscapeRoomRedi
         public int Korkeus { get; set; }
         public int Leveys { get; set; }
 
+        public Ostoskärry Ostoskärry { get; set; } = new Ostoskärry();
+
+
         public Pelaaja(int korkeus, int leveys)
         {
             Korkeus = korkeus;
