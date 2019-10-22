@@ -6,7 +6,8 @@ namespace EscapeRoomRedi
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Kartta k = new Kartta();
+            k.Luekartta();
         }
     }
 }
