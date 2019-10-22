@@ -21,10 +21,10 @@ namespace EscapeRoomRedi
         {
             while (true)
             {
-            Console.WriteLine("paina jotain");
-            Näppäin n = new Näppäin();
-            char merkki = n.LueNäppäin();
-            if (merkki == 'x') { break; }
+                Console.WriteLine("paina jotain");
+                Näppäin n = new Näppäin();
+                char merkki = n.LueNäppäin();
+                if (merkki == 'x') { break; }
                 LiikutaPelaajaa(merkki);
                 Kartta.TulostaPohja();
                 if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys] == 'X')
@@ -42,18 +42,26 @@ namespace EscapeRoomRedi
 
         private void LiikutaPelaajaa(char näppäin)
         {
-            
-            
-                switch (näppäin)
-                {
-                    case 'w':
-                        if (!Kartta.Esteet.Contains(Kartta.Pohja[Pelaaja.Korkeus - 1, Pelaaja.Leveys]) )
-                        {
-                            Pelaaja.Ylös();
-                        }
-                        break;
+
+
+            switch (näppäin)
+            {
+                case 'w':
+                    if (!Kartta.Esteet.Contains(Kartta.Pohja[Pelaaja.Korkeus - 1, Pelaaja.Leveys]))
+                    {
+                        Pelaaja.Ylös();
+                    }
+                    else if (Kartta.Pohja[Pelaaja.Korkeus - 1, Pelaaja.Leveys] == '@' && Pelaaja.Ostoskärry.Avaimet.Contains('e'))
+                    {
+                        Pelaaja.Ylös();
+                    }
+                    break;
                 case 's':
                     if (!Kartta.Esteet.Contains(Kartta.Pohja[Pelaaja.Korkeus + 1, Pelaaja.Leveys]))
+                    {
+                        Pelaaja.Alas();
+                    }
+                    else if (Kartta.Pohja[Pelaaja.Korkeus + 1, Pelaaja.Leveys] == '@' && Pelaaja.Ostoskärry.Avaimet.Contains('e'))
                     {
                         Pelaaja.Alas();
                     }
@@ -63,9 +71,17 @@ namespace EscapeRoomRedi
                     {
                         Pelaaja.Vasen();
                     }
+                    else if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys -1] == '@' && Pelaaja.Ostoskärry.Avaimet.Contains('e'))
+                    {
+                        Pelaaja.Vasen();
+                    }
                     break;
                 case 'd':
                     if (!Kartta.Esteet.Contains(Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys + 1]))
+                    {
+                        Pelaaja.Oikea();
+                    }
+                    else if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys + 1] == '@' && Pelaaja.Ostoskärry.Avaimet.Contains('e'))
                     {
                         Pelaaja.Oikea();
                     }
@@ -73,8 +89,8 @@ namespace EscapeRoomRedi
                 default:
                     break;
             }
-            
-            
+
+
         }
     }
 }
