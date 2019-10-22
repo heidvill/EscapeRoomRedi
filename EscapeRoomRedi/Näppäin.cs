@@ -9,13 +9,11 @@ namespace EscapeRoomRedi
         public char input { get; set; }
         ConsoleKeyInfo näppäin;
 
-        public void LueNäppäin()
+        public char LueNäppäin()
         {
             näppäin = Console.ReadKey();
             input = näppäin.KeyChar;
-            Console.WriteLine();
-            Console.WriteLine(input);
-
+            return input;
         }
 
     }

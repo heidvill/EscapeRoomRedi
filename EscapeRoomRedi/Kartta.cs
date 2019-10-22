@@ -8,7 +8,7 @@ namespace EscapeRoomRedi
     class Kartta
     {
         public char[,] Pohja { get; set; }
-
+        public Pelaaja Pelaaja { get; set; }
         public void Luekartta()
         {
             string polku = "../../../Taso1.txt";
@@ -42,6 +42,8 @@ namespace EscapeRoomRedi
                 }
                 foreach (char merkki in rivi)
                 {
+                    if (merkki == 'O')
+                    { Pelaaja = new Pelaaja(i, j); }
                     Pohja[i, j] = merkki;
                     j++;
                 }
