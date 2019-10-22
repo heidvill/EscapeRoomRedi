@@ -13,7 +13,7 @@ namespace EscapeRoomRedi
         public void AloitaPeli()
         {
             Kartta = new Kartta();
-            Kartta.Luekartta();
+            Kartta.LueKartta();
             Pelaaja = Kartta.Pelaaja;
 
         }
@@ -28,19 +28,36 @@ namespace EscapeRoomRedi
                 switch (merkki)
                 {
                     case 'w': 
+                        if (Kartta.Pohja[Pelaaja.Korkeus-1, Pelaaja.Leveys]!='#')
+                        {
                         Pelaaja.Ylös();
+                        }
                         break;
                     case 's':
-                        Pelaaja.Alas();
+                        if (Kartta.Pohja[Pelaaja.Korkeus + 1, Pelaaja.Leveys] != '#')
+                        {
+                            Pelaaja.Alas();
+                        }
                         break;
                     case 'a':
-                        Pelaaja.Vasen();
+                        if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys -1] != '#')
+                        {
+                            Pelaaja.Vasen();
+                        }
                         break;
                     case 'd':
-                        Pelaaja.Oikea();
+                        if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys +1] != '#')
+                        {
+                            Pelaaja.Oikea();
+                        }
                         break;
                     default:
                         break;
+                }
+                Kartta.TulostaPohja();
+                if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys]== 'X')
+                {
+                    Kartta.SeuraavaTaso();
                 }
             }
 

@@ -14,7 +14,10 @@ namespace EscapeRoomRedi
             Korkeus = korkeus;
             Leveys = leveys;
         }
-        
+
+        public Pelaaja()
+        {
+        }
 
         public void Ylös()
         {

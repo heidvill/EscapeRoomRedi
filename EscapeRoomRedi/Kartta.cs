@@ -9,9 +9,16 @@ namespace EscapeRoomRedi
     {
         public char[,] Pohja { get; set; }
         public Pelaaja Pelaaja { get; set; }
-        public void Luekartta()
+        public int Taso { get; set; } = 1;
+        private string polku;
+        public Kartta()
         {
-            string polku = "../../../Taso1.txt";
+            polku = "../../../Taso1.txt";
+            Pelaaja = new Pelaaja();
+        }
+
+        public void LueKartta()
+        {
             StreamReader sr = new StreamReader(polku);
             string rivi = "";
             int leveys = 0;
@@ -43,26 +50,56 @@ namespace EscapeRoomRedi
                 foreach (char merkki in rivi)
                 {
                     if (merkki == 'O')
-                    { Pelaaja = new Pelaaja(i, j); }
-                    Pohja[i, j] = merkki;
+                    {
+                        Pelaaja.Korkeus = i;
+                        Pelaaja.Leveys = j;
+                        Pohja[i, j] = ' ';
+
+                    }
+                    else
+                    {
+                        Pohja[i, j] = merkki;
+                    }
                     j++;
+
                 }
                 i++;
                 j = 0;
             }
-
+            sr.Dispose();
             TulostaPohja();
         }
 
         public void TulostaPohja()
         {
-            for (int i = 0; i < 5; i++)
+            Console.Clear();
+            for (int i = 0; i < Pohja.GetLength(0); i++)
             {
-                for (int j = 0; j < 12; j++)
+                for (int j = 0; j < Pohja.GetLength(1); j++)
                 {
+                    if (i==Pelaaja.Korkeus && j==Pelaaja.Leveys)
+                    {
+                        Console.Write("O");
+                    }
+                    else
+                    {
                     Console.Write(Pohja[i, j]);
+
+                    }
                 }
                 Console.WriteLine();
+            }
+            
+        }
+
+        public void SeuraavaTaso()
+        {
+            Taso++;
+            if (Taso == 2)
+            {
+                polku = "../../../Taso2.txt";
+                LueKartta();
+
             }
         }
 
