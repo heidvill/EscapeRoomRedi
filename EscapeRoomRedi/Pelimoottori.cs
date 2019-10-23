@@ -63,10 +63,11 @@ namespace EscapeRoomRedi
 
         public void PeliSilmukka()
         {
+            Console.WriteLine("Liiku wasd-painikkeilla.");
+            Console.ReadKey();
             Kartta.TulostaPohja(Taso);
             while (!GameOver)
             {
-                Console.WriteLine("liiku wasd-painikkeilla");
                 Näppäin n = new Näppäin();
                 char merkki = n.LueNäppäin();
                 if (merkki == 'x') { break; }
@@ -247,6 +248,19 @@ namespace EscapeRoomRedi
             else if (Taso == 3)
             {
                 Kartta.Polku = "../../../Taso3.txt";
+                Console.Clear();
+                Console.WriteLine("Redin parkkihalli, Kalasatama");
+                Console.ReadKey();
+                Console.Clear();
+                Console.WriteLine("Ovi aukesi ja löysit itsesi Redin parkkihallista. \nKuulet vaimeaa örinää. Onko se Saksaa? \nNäköpiiriisi osuu humalainen David Hasselhoff. \nHän haluaa laulaa sinulle serenadin. \nVälttele Hoffia ja etsi tie seuraavalle ovelle(X).");
+                Console.ReadKey();
+                Console.Clear();
+                Kartta.LueKartta();
+                Kartta.TulostaPohja(Taso);
+            }
+            else if (Taso == 4)
+            {
+                Kartta.Polku = "../../../Taso4.txt";
                 Console.Clear();
                 Console.WriteLine("Redin katto, Kalasatama");
                 Console.ReadKey();
