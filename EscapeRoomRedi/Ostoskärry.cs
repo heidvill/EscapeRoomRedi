@@ -6,7 +6,7 @@ namespace EscapeRoomRedi
 {
     public class Ostoskärry
     {
-        public List<char> Avaimet  { get; set; }
+        public List<char> Avaimet { get; set; }
 
         public Ostoskärry()
         {
