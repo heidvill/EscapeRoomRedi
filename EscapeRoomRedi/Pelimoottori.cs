@@ -18,7 +18,9 @@ namespace EscapeRoomRedi
             p.Nimi = Console.ReadLine();
             Console.Write($"Moi {p.Nimi}!\nAloita peli painamalla mitä tahansa näppäintä");
             Console.ReadLine();
-            Console.WriteLine("Pelin aloitustarina\nJatka painamalla mitä tahansa näppäintä");
+            Console.WriteLine($"Keilaniemi, Espoo\nOlet koodannut koko illan Academyn kampuksella. Kahvikaan ei enää auta väsymykseen ja päätät lähteä kotiin Itä - Helsinkiin.\nEhdit illan viimeiseen metroon ja juna lähtee liikkeelle.Lauttasaaren kohdalla silmäluomesi alkavat\ntuntua raskaalta. Pilkit unen ja valveen rajamailla kunnes uni vie voiton...\nJatka painamalla mitä tahansa näppäintä");
+            Console.ReadLine();
+            Console.WriteLine($"Pimeä huone, Tuntematon\nHeräät pimeästä huoneesta.Et ole kotona.Et ole myöskään metrossa.Kännykkäsi valolla löydät huoneesta uloskäynnin(X).Mihin se mahtaa johtaa ?");
             Console.ReadLine();
             Kartta = new Kartta();
             Kartta.LueKartta();
