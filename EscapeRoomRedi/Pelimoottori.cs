@@ -15,6 +15,8 @@ namespace EscapeRoomRedi
         public int Taso { get; set; } = 1;
 
         Pelaaja p = new Pelaaja();
+        private string viesti = "";
+
         public void AloitaPeli()
         {
             int DA = 244;
@@ -26,22 +28,27 @@ namespace EscapeRoomRedi
             p.Nimi = Console.ReadLine();
             Console.WriteAscii($"Moi {p.Nimi}!", Color.FromArgb(DA, V, ID));
             Console.WriteLine("Aloita peli painamalla mitä tahansa näppäintä");
-            Console.ReadLine();
+            Console.ReadKey();
             Console.Clear();
-            Console.WriteLine("Keilaniemi, Espoo");
-            Console.ReadLine();
-            Console.Clear();
-            Console.WriteLine($"Olet koodannut koko illan Academyn kampuksella.\nKahvikaan ei enää auta väsymykseen ja päätät lähteä kotiin Itä - Helsinkiin.\nEhdit illan viimeiseen metroon ja juna lähtee liikkeelle. \nLauttasaaren kohdalla silmäluomesi alkavat tuntua raskaalta. \nPilkit unen ja valveen rajamailla kunnes uni vie voiton...\nJatka painamalla mitä tahansa näppäintä");
-            Console.ReadLine();
-            Console.Clear();
-            Console.WriteLine("Pimeä huone, Tuntematon sijainti");
-            Console.ReadLine();
-            Console.Clear();
-            Console.WriteLine($"Heräät pimeästä huoneesta. Et ole kotona.\nEt ole myöskään metrossa.\nKännykkäsi valolla löydät huoneesta uloskäynnin(X).\nMihin se mahtaa johtaa?");
-            Console.ReadLine();
+            TulostaAlkutarina();
             Kartta = new Kartta();
             Kartta.LueKartta();
             Pelaaja = Kartta.Pelaaja;
+        }
+
+        private void TulostaAlkutarina()
+        {
+            Console.WriteLine("Keilaniemi, Espoo");
+            Console.ReadKey();
+            Console.Clear();
+            Console.WriteLine($"Olet koodannut koko illan Academyn kampuksella.\nKahvikaan ei enää auta väsymykseen ja päätät lähteä kotiin Itä - Helsinkiin.\nEhdit illan viimeiseen metroon ja juna lähtee liikkeelle. \nLauttasaaren kohdalla silmäluomesi alkavat tuntua raskaalta. \nPilkit unen ja valveen rajamailla kunnes uni vie voiton...\nJatka painamalla mitä tahansa näppäintä");
+            Console.ReadKey();
+            Console.Clear();
+            Console.WriteLine("Pimeä huone, Tuntematon sijainti");
+            Console.ReadKey();
+            Console.Clear();
+            Console.WriteLine($"Heräät pimeästä huoneesta. Et ole kotona.\nEt ole myöskään metrossa.\nKännykkäsi valolla löydät huoneesta uloskäynnin(X).\nMihin se mahtaa johtaa?");
+            Console.ReadKey();
         }
 
         public void PeliSilmukka()
@@ -54,6 +61,11 @@ namespace EscapeRoomRedi
                 if (merkki == 'x') { break; }
                 LiikutaPelaajaa(merkki);
                 Kartta.TulostaPohja();
+                if(viesti != "")
+                {
+                    Console.WriteLine(viesti);
+                    viesti = "";
+                }
 
                 if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys] == 'X')
                 {
@@ -98,6 +110,10 @@ namespace EscapeRoomRedi
             {
                 Pelaaja.Ylös();
             }
+            else if (Kartta.Pohja[Pelaaja.Korkeus - 1, Pelaaja.Leveys] == '@' && !Pelaaja.Ostoskärry.Avaimet.Contains('e'))
+            {
+                viesti = "Sinulla ei ole oikeaa avainta";
+            }
         }
 
         private void YritäLiikuttaaPelaajaaAlas()
@@ -110,6 +126,10 @@ namespace EscapeRoomRedi
             {
                 Pelaaja.Alas();
             }
+            else if (Kartta.Pohja[Pelaaja.Korkeus + 1, Pelaaja.Leveys] == '@' && !Pelaaja.Ostoskärry.Avaimet.Contains('e'))
+            {
+                viesti = "Sinulla ei ole oikeaa avainta";
+            }
         }
 
         private void YritäLiikuttaaPelaajaaVasemmalle()
@@ -120,7 +140,7 @@ namespace EscapeRoomRedi
             }
             else if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys - 1] == '@' && Pelaaja.Ostoskärry.Avaimet.Contains('e'))
             {
-                Pelaaja.Vasen();
+                viesti = "Sinulla ei ole oikeaa avainta";
             }
         }
 
@@ -134,6 +154,15 @@ namespace EscapeRoomRedi
             {
                 Pelaaja.Oikea();
             }
+            else if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys + 1] == '@' && !Pelaaja.Ostoskärry.Avaimet.Contains('e'))
+            {
+                viesti = "Sinulla ei ole oikeaa avainta";
+            }
+        }
+
+        private char GetKartanMerkki(int rivi, int sarake)
+        {
+            return Kartta.Pohja[rivi, sarake];
         }
 
         public void SeuraavaTaso()
@@ -144,10 +173,10 @@ namespace EscapeRoomRedi
                 Kartta.Polku = "../../../Taso2.txt";
                 Console.Clear();
                 Console.WriteLine("Redi, Kalasatama");
-                Console.ReadLine();
+                Console.ReadKey();
                 Console.Clear();
-                Console.WriteLine("Olet löytänyt itsesi Suomen suurimmasta tahattomasta pakohuoneesta. \nAinoa löytämäsi ovi on lukossa. \nHuomaat tyhjissä liiketiloissa yksittäisiä avaimia(a, b, c, d, e, f). \nAvaisikohan jokin niistä oven vai oletko jumissa ikuisesti ?");
-                Console.ReadLine();
+                Console.WriteLine("Olet löytänyt itsesi Suomen suurimmasta tahattomasta pakohuoneesta. \nAinoa löytämäsi ovi(X) on lukittu(@). \nHuomaat tyhjissä liiketiloissa yksittäisiä avaimia(a, b, c, d, e, f). \nAvaisikohan jokin niistä lukon(@) vai oletko jumissa ikuisesti ?");
+                Console.ReadKey();
                 Console.Clear();
                 Kartta.LueKartta();
             }
@@ -162,7 +191,7 @@ namespace EscapeRoomRedi
             foreach (char merkki in tulostettava)
             {
                 Console.Write(merkki);
-                Thread.Sleep(50);
+                Thread.Sleep(20);
             }
         }
     }
