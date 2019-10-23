@@ -53,14 +53,15 @@ namespace EscapeRoomRedi
 
         public void PeliSilmukka()
         {
+            Kartta.TulostaPohja();
             while (true)
             {
                 Console.WriteLine("liiku wasd-painikkeilla");
                 Näppäin n = new Näppäin();
                 char merkki = n.LueNäppäin();
                 if (merkki == 'x') { break; }
+
                 LiikutaPelaajaa(merkki);
-                Kartta.TulostaPohja();
                 if(viesti != "")
                 {
                     Console.WriteLine(viesti);
@@ -108,60 +109,107 @@ namespace EscapeRoomRedi
         {
             if (!Kartta.Esteet.Contains(Kartta.Pohja[Pelaaja.Korkeus - 1, Pelaaja.Leveys]))
             {
-                Pelaaja.Ylös();
+                Ylös();
             }
             else if (Kartta.Pohja[Pelaaja.Korkeus - 1, Pelaaja.Leveys] == '@' && Pelaaja.Ostoskärry.Avaimet.Contains('e'))
             {
-                Pelaaja.Ylös();
+                Ylös();
             }
             else if (Kartta.Pohja[Pelaaja.Korkeus - 1, Pelaaja.Leveys] == '@' && !Pelaaja.Ostoskärry.Avaimet.Contains('e'))
             {
                 viesti = "Sinulla ei ole oikeaa avainta";
             }
+            Console.SetCursorPosition(0, Kartta.Pohja.GetLength(0));
+
+        }
+
+        private void Ylös()
+        {
+            Console.SetCursorPosition(Pelaaja.Leveys, Pelaaja.Korkeus);
+            Console.Write(' ');
+            Pelaaja.Ylös();
+            Console.SetCursorPosition(Pelaaja.Leveys, Pelaaja.Korkeus);
+            Console.Write('O');
         }
 
         private void YritäLiikuttaaPelaajaaAlas()
         {
             if (!Kartta.Esteet.Contains(Kartta.Pohja[Pelaaja.Korkeus + 1, Pelaaja.Leveys]))
             {
-                Pelaaja.Alas();
+                Alas();
             }
             else if (Kartta.Pohja[Pelaaja.Korkeus + 1, Pelaaja.Leveys] == '@' && Pelaaja.Ostoskärry.Avaimet.Contains('e'))
             {
-                Pelaaja.Alas();
+                Alas();
             }
             else if (Kartta.Pohja[Pelaaja.Korkeus + 1, Pelaaja.Leveys] == '@' && !Pelaaja.Ostoskärry.Avaimet.Contains('e'))
             {
                 viesti = "Sinulla ei ole oikeaa avainta";
             }
+            Console.SetCursorPosition(0, Kartta.Pohja.GetLength(0));
+        }
+
+        private void Alas()
+        {
+            Console.SetCursorPosition(Pelaaja.Leveys, Pelaaja.Korkeus);
+            Console.Write(' ');
+            Pelaaja.Alas();
+            Console.SetCursorPosition(Pelaaja.Leveys, Pelaaja.Korkeus);
+            Console.Write('O');
         }
 
         private void YritäLiikuttaaPelaajaaVasemmalle()
         {
             if (!Kartta.Esteet.Contains(Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys - 1]))
             {
-                Pelaaja.Vasen();
+                Vasen();
             }
             else if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys - 1] == '@' && Pelaaja.Ostoskärry.Avaimet.Contains('e'))
             {
+                Vasen();
+            }
+            else if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys - 1] == '@' && !Pelaaja.Ostoskärry.Avaimet.Contains('e'))
+            {
                 viesti = "Sinulla ei ole oikeaa avainta";
             }
+            Console.SetCursorPosition(0, Kartta.Pohja.GetLength(0));
+
+        }
+
+        private void Vasen()
+        {
+            Console.SetCursorPosition(Pelaaja.Leveys, Pelaaja.Korkeus);
+            Console.Write(' ');
+            Pelaaja.Vasen();
+            Console.SetCursorPosition(Pelaaja.Leveys, Pelaaja.Korkeus);
+            Console.Write('O');
         }
 
         private void YritäLiikuttaaPelaajaaOikealle()
         {
             if (!Kartta.Esteet.Contains(Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys + 1]))
             {
-                Pelaaja.Oikea();
+                Oikea();
             }
             else if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys + 1] == '@' && Pelaaja.Ostoskärry.Avaimet.Contains('e'))
             {
-                Pelaaja.Oikea();
+                Oikea();
             }
             else if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys + 1] == '@' && !Pelaaja.Ostoskärry.Avaimet.Contains('e'))
             {
                 viesti = "Sinulla ei ole oikeaa avainta";
             }
+            Console.SetCursorPosition(0, Kartta.Pohja.GetLength(0));
+
+        }
+
+        private void Oikea()
+        {
+            Console.SetCursorPosition(Pelaaja.Leveys, Pelaaja.Korkeus);
+            Console.Write(' ');
+            Pelaaja.Oikea();
+            Console.SetCursorPosition(Pelaaja.Leveys, Pelaaja.Korkeus);
+            Console.Write('O');
         }
 
         private char GetKartanMerkki(int rivi, int sarake)
@@ -183,6 +231,7 @@ namespace EscapeRoomRedi
                 Console.ReadKey();
                 Console.Clear();
                 Kartta.LueKartta();
+                Kartta.TulostaPohja();
             }
             if (Taso == 3)
             {
