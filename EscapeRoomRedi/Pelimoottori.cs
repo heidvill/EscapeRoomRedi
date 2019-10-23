@@ -27,7 +27,15 @@ namespace EscapeRoomRedi
             TulostaMerkkiKerrallaan("Tervetuloa pelaamaan! Mikä on nimesi?");
             //Console.WriteLine("Tervetuloa pelaamaan! Mikä on nimesi?");
             p.Nimi = Console.ReadLine();
-            Console.WriteAscii($"Moi {p.Nimi}!", Color.FromArgb(DA, V, ID));
+            try
+            {
+                Console.WriteAscii($"Moi {p.Nimi}!", Color.FromArgb(DA, V, ID));
+            }
+            catch
+            {
+                p.Nimi = "Pelaaja";
+                Console.WriteAscii($"Moi {p.Nimi}!", Color.FromArgb(DA, V, ID));
+            }
             Console.WriteLine("Aloita peli painamalla mitä tahansa näppäintä");
             Console.ReadKey();
             Console.Clear();
