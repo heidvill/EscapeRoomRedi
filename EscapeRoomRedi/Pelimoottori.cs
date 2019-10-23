@@ -34,6 +34,7 @@ namespace EscapeRoomRedi
             TulostaAlkutarina();
             Kartta = new Kartta();
             Kartta.LueKartta();
+            Kartta.TulostaPohja(Taso);
             Pelaaja = Kartta.Pelaaja;
         }
 
@@ -54,7 +55,7 @@ namespace EscapeRoomRedi
 
         public void PeliSilmukka()
         {
-            Kartta.TulostaPohja();
+            Kartta.TulostaPohja(Taso);
             while (!GameOver)
             {
                 Console.WriteLine("liiku wasd-painikkeilla");
@@ -233,9 +234,9 @@ namespace EscapeRoomRedi
                 Console.ReadKey();
                 Console.Clear();
                 Kartta.LueKartta();
-                Kartta.TulostaPohja();
+                Kartta.TulostaPohja(Taso);
             }
-            if (Taso == 3)
+            else if (Taso == 3)
             {
                 Kartta.Polku = "../../../Taso3.txt";
                 Console.Clear();
@@ -246,6 +247,8 @@ namespace EscapeRoomRedi
                 Console.ReadKey();
                 Console.Clear();
                 Kartta.LueKartta();
+                Kartta.TulostaPohja(Taso);
+
             }
             else
             {
@@ -258,6 +261,9 @@ namespace EscapeRoomRedi
 
             Console.WriteLine("Voi rähmä. Kompastuit ja putosit kattoikkunan läpi takaisin pimeään huoneeseen josta aloitit..");
             Taso = 1;
+            Kartta.Polku = "../../../Taso1.txt";
+            Kartta.LueKartta();
+            Kartta.TulostaPohja(Taso);
    
         }
 

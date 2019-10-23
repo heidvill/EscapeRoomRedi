@@ -74,10 +74,9 @@ namespace EscapeRoomRedi
                 j = 0;
             }
             sr.Dispose();
-            TulostaPohja();
         }
 
-        public void TulostaPohja()
+        public void TulostaPohja(int taso)
         {
             Console.Clear();
             for (int i = 0; i < Pohja.GetLength(0); i++)
@@ -99,7 +98,7 @@ namespace EscapeRoomRedi
                         {
                             c = Color.Red;
                         }
-                        else if ("abcdef@".Contains(Pohja[i, j]))
+                        else if (taso == 2 && "abcdef@".Contains(Pohja[i, j]))
                         {
                             c = Color.Yellow;
                         }
