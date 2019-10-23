@@ -1,7 +1,11 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Drawing;
+using Console = Colorful.Console;
+
 
 namespace EscapeRoomRedi
 {
@@ -9,7 +13,7 @@ namespace EscapeRoomRedi
     {
         public char[,] Pohja { get; set; }
         public Pelaaja Pelaaja { get; set; }
-        
+
         public List<char> Esteet { get; set; }
         public string Polku { get; set; }
         //private string polku;
@@ -17,7 +21,7 @@ namespace EscapeRoomRedi
         {
             Polku = "../../../Taso1.txt";
             Pelaaja = new Pelaaja();
-            Esteet = new List<char> {'#', '@'};
+            Esteet = new List<char> { '#', '@' };
         }
 
         public void LueKartta()
@@ -46,7 +50,7 @@ namespace EscapeRoomRedi
             while (true)
             {
                 rivi = sr.ReadLine();
-                if(rivi == null)
+                if (rivi == null)
                 {
                     break;
                 }
@@ -70,23 +74,36 @@ namespace EscapeRoomRedi
                 j = 0;
             }
             sr.Dispose();
-            TulostaPohja();
         }
 
-        public void TulostaPohja()
+        public void TulostaPohja(int taso)
         {
             Console.Clear();
             for (int i = 0; i < Pohja.GetLength(0); i++)
             {
                 for (int j = 0; j < Pohja.GetLength(1); j++)
                 {
-                    if (i==Pelaaja.Korkeus && j==Pelaaja.Leveys)
+                    if (i == Pelaaja.Korkeus && j == Pelaaja.Leveys)
                     {
                         Console.Write("O");
                     }
                     else
                     {
-                    Console.Write(Pohja[i, j]);
+                        Color c = Color.White;
+                        if (Pohja[i, j] == '#')
+                        {
+                            c = Color.Gray;
+                        }
+                        else if (Pohja[i, j] == 'X')
+                        {
+                            c = Color.Red;
+                        }
+                        else if (taso == 2 && "abcdef@".Contains(Pohja[i, j]))
+                        {
+                            c = Color.Yellow;
+                        }
+
+                        Console.Write(Pohja[i, j], c);
                     }
                 }
                 Console.WriteLine();
