@@ -87,13 +87,10 @@ namespace EscapeRoomRedi
                     else
                     {
                     Console.Write(Pohja[i, j]);
-
                     }
                 }
                 Console.WriteLine();
             }
-            
-        }        
-
+        }
     }
 }
