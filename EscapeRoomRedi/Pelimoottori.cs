@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EscapeRoomRedi
 {
-    class Pelimoottori
+    public class Pelimoottori
     {
         public Kartta Kartta { get; set; }
         public Näppäin Näppäin { get; set; }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EscapeRoomRedi
 {
-    class Pelaaja
+    public class Pelaaja
     {
         public int Korkeus { get; set; }
         public int Leveys { get; set; }
