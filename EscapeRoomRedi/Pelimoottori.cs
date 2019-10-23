@@ -71,6 +71,10 @@ namespace EscapeRoomRedi
                 {
                     SeuraavaTaso();
                 }
+                if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys] == 'Z')
+                {
+                    PalaaAlkuun();
+                }
                 else if ("abcdef".Contains(Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys]))
                 {
                     Pelaaja.Ostoskärry.LisääAvain(Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys]);
@@ -180,11 +184,31 @@ namespace EscapeRoomRedi
                 Console.Clear();
                 Kartta.LueKartta();
             }
+            if (Taso == 3)
+            {
+                Kartta.Polku = "../../../Taso3.txt";
+                Console.Clear();
+                Console.WriteLine("Redin katto, Kalasatama");
+                Console.ReadKey();
+                Console.Clear();
+                Console.WriteLine("Illan traumaattiset tapahtumat ovat tuoneet sinut valinnan äärelle. Voit ottaa riskialttiin pikahissin Itäväylälle tai jatkaa normihissillä tuntemattomaan.");
+                Console.ReadKey();
+                Console.Clear();
+                Kartta.LueKartta();
+            }
             else
             {
                 Console.WriteLine("Onneksi olkoon, löysit tien ulkoilmaan. Mutta mitä ihmettä, kello on 7.45? Nyt kiireellä takaisin Keilaniemeen.");
             }
         }
+        public void PalaaAlkuun()
+        {
+
+            Console.WriteLine("Voi rähmä. Kompastuit ja putosit kattoikkunan läpi takaisin pimeään huoneeseen josta aloitit..");
+            Taso = 1;
+   
+        }
+
 
         public void TulostaMerkkiKerrallaan(string tulostettava)
         {
