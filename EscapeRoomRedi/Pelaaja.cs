@@ -34,16 +34,16 @@ namespace EscapeRoomRedi
             Korkeus++;
         }
 
-        public void Vasen() 
+        public void Vasen()
         {
             Leveys--;
         }
-    
+
         public void Oikea()
         {
             Leveys++;
         }
     }
 
-    
+
 }
