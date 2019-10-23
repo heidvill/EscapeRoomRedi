@@ -13,6 +13,7 @@ namespace EscapeRoomRedi
         public Näppäin Näppäin { get; set; }
         public Pelaaja Pelaaja { get; set; }
         public int Taso { get; set; } = 1;
+        public bool GameOver { get; set; } = false;
 
         Pelaaja p = new Pelaaja();
         private string viesti = "";
@@ -24,7 +25,10 @@ namespace EscapeRoomRedi
             int ID = 255;
 
             TulostaMerkkiKerrallaan("Tervetuloa pelaamaan! Mikä on nimesi?");
+<<<<<<< HEAD
             System.Console.WriteLine();
+=======
+>>>>>>> a472b5e8234f3809225d2aefbeeefc39fa35c3bb
             //Console.WriteLine("Tervetuloa pelaamaan! Mikä on nimesi?");
             p.Nimi = Console.ReadLine();
             Console.WriteAscii($"Moi {p.Nimi}!", Color.FromArgb(DA, V, ID));
@@ -34,6 +38,7 @@ namespace EscapeRoomRedi
             TulostaAlkutarina();
             Kartta = new Kartta();
             Kartta.LueKartta();
+            Kartta.TulostaPohja(Taso);
             Pelaaja = Kartta.Pelaaja;
             Console.WriteLine("liiku wasd-painikkeilla");
         }
@@ -55,8 +60,8 @@ namespace EscapeRoomRedi
 
         public void PeliSilmukka()
         {
-            Kartta.TulostaPohja();
-            while (true)
+            Kartta.TulostaPohja(Taso);
+            while (!GameOver)
             {
                 
                 Näppäin n = new Näppäin();
@@ -74,12 +79,17 @@ namespace EscapeRoomRedi
                 {
                     SeuraavaTaso();
                 }
+                if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys] == 'Z')
+                {
+                    PalaaAlkuun();
+                }
                 else if ("abcdef".Contains(Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys]))
                 {
                     Pelaaja.Ostoskärry.LisääAvain(Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys]);
                     Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys] = ' ';
                 }
             }
+            Console.ReadKey();
         }
 
         private void LiikutaPelaajaa(char näppäin)
@@ -229,13 +239,39 @@ namespace EscapeRoomRedi
                 Console.ReadKey();
                 Console.Clear();
                 Kartta.LueKartta();
-                Kartta.TulostaPohja();
+                Kartta.TulostaPohja(Taso);
+            }
+            else if (Taso == 3)
+            {
+                Kartta.Polku = "../../../Taso3.txt";
+                Console.Clear();
+                Console.WriteLine("Redin katto, Kalasatama");
+                Console.ReadKey();
+                Console.Clear();
+                Console.WriteLine("Illan traumaattiset tapahtumat ovat tuoneet sinut valinnan äärelle. Voit ottaa riskialttiin pikahissin Itäväylälle tai jatkaa normihissillä tuntemattomaan.");
+                Console.ReadKey();
+                Console.Clear();
+                Kartta.LueKartta();
+                Kartta.TulostaPohja(Taso);
+
             }
             else
             {
                 Console.WriteLine("Onneksi olkoon, löysit tien ulkoilmaan. Mutta mitä ihmettä, kello on 7.45? Nyt kiireellä takaisin Keilaniemeen.");
+                GameOver = true;
             }
         }
+        public void PalaaAlkuun()
+        {
+
+            Console.WriteLine("Voi rähmä. Kompastuit ja putosit kattoikkunan läpi takaisin pimeään huoneeseen josta aloitit..");
+            Taso = 1;
+            Kartta.Polku = "../../../Taso1.txt";
+            Kartta.LueKartta();
+            Kartta.TulostaPohja(Taso);
+   
+        }
+
 
         public void TulostaMerkkiKerrallaan(string tulostettava)
         {
@@ -244,6 +280,7 @@ namespace EscapeRoomRedi
                 Console.Write(merkki);
                 Thread.Sleep(20);
             }
+            Console.WriteLine();
         }
     }
 }
