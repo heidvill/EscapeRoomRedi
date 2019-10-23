@@ -5,7 +5,7 @@ using System.Text;
 
 namespace EscapeRoomRedi
 {
-    class Kartta
+    public class Kartta
     {
         public char[,] Pohja { get; set; }
         public Pelaaja Pelaaja { get; set; }

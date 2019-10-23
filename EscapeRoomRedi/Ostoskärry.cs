@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EscapeRoomRedi
 {
-    class Ostoskärry
+    public class Ostoskärry
     {
         public List<char> Avaimet  { get; set; }
 

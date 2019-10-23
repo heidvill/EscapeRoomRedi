@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EscapeRoomRedi
 {
-    class Näppäin
+    public class Näppäin
     {
         public char input { get; set; }
         ConsoleKeyInfo näppäin;
