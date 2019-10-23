@@ -9,19 +9,20 @@ namespace EscapeRoomRedi
     {
         public char[,] Pohja { get; set; }
         public Pelaaja Pelaaja { get; set; }
-        public int Taso { get; set; } = 1;
+        
         public List<char> Esteet { get; set; }
-        private string polku;
+        public string Polku { get; set; }
+        //private string polku;
         public Kartta()
         {
-            polku = "../../../Taso1.txt";
+            Polku = "../../../Taso1.txt";
             Pelaaja = new Pelaaja();
             Esteet = new List<char> {'#', '@'};
         }
 
         public void LueKartta()
         {
-            StreamReader sr = new StreamReader(polku);
+            StreamReader sr = new StreamReader(Polku);
             string rivi = "";
             int leveys = 0;
             int korkeus = 0;
@@ -92,18 +93,7 @@ namespace EscapeRoomRedi
                 Console.WriteLine();
             }
             
-        }
-
-        public void SeuraavaTaso()
-        {
-            Taso++;
-            if (Taso == 2)
-            {
-                polku = "../../../Taso2.txt";
-                LueKartta();
-
-            }
-        }
+        }        
 
     }
 }

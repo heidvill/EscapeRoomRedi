@@ -9,27 +9,35 @@ namespace EscapeRoomRedi
         public Kartta Kartta { get; set; }
         public Näppäin Näppäin { get; set; }
         public Pelaaja Pelaaja { get; set; }
+        public int Taso { get; set; } = 1;
 
+        Pelaaja p = new Pelaaja();
         public void AloitaPeli()
         {
+            Console.WriteLine("Tervetuloa pelaamaan! Mikä on nimesi?");
+            p.Nimi = Console.ReadLine();
+            Console.Write($"Moi {p.Nimi}!\nAloita peli painamalla mitä tahansa näppäintä");
+            Console.ReadLine();
+            Console.WriteLine("Pelin aloitustarina\nJatka painamalla mitä tahansa näppäintä");
+            Console.ReadLine();
             Kartta = new Kartta();
             Kartta.LueKartta();
-            Pelaaja = Kartta.Pelaaja;
-
+            Pelaaja = Kartta.Pelaaja;            
         }
+      
         public void PeliSilmukka()
         {
             while (true)
             {
-                Console.WriteLine("paina jotain");
+                Console.WriteLine("liiku wasd-painikkeilla");
                 Näppäin n = new Näppäin();
                 char merkki = n.LueNäppäin();
                 if (merkki == 'x') { break; }
                 LiikutaPelaajaa(merkki);
                 Kartta.TulostaPohja();
                 if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys] == 'X')
-                {
-                    Kartta.SeuraavaTaso();
+                {                    
+                    SeuraavaTaso();
                 }
                 else if ("abcdef".Contains(Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys]))
                 {
@@ -91,6 +99,16 @@ namespace EscapeRoomRedi
             }
 
 
+        }
+        public void SeuraavaTaso()
+        {
+            Taso++;
+            if (Taso == 2)
+            {
+
+                Kartta.Polku = "../../../Taso2.txt";
+                Kartta.LueKartta();
+            }
         }
     }
 }
