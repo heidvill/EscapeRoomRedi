@@ -13,6 +13,7 @@ namespace EscapeRoomRedi
         public Näppäin Näppäin { get; set; }
         public Pelaaja Pelaaja { get; set; }
         public int Taso { get; set; } = 1;
+        public bool GameOver { get; set; } = false;
 
         Pelaaja p = new Pelaaja();
         private string viesti = "";
@@ -24,7 +25,7 @@ namespace EscapeRoomRedi
             int ID = 255;
 
             TulostaMerkkiKerrallaan("Tervetuloa pelaamaan! Mikä on nimesi?");
-            Console.WriteLine("Tervetuloa pelaamaan! Mikä on nimesi?");
+            //Console.WriteLine("Tervetuloa pelaamaan! Mikä on nimesi?");
             p.Nimi = Console.ReadLine();
             Console.WriteAscii($"Moi {p.Nimi}!", Color.FromArgb(DA, V, ID));
             Console.WriteLine("Aloita peli painamalla mitä tahansa näppäintä");
@@ -54,7 +55,7 @@ namespace EscapeRoomRedi
         public void PeliSilmukka()
         {
             Kartta.TulostaPohja();
-            while (true)
+            while (!GameOver)
             {
                 Console.WriteLine("liiku wasd-painikkeilla");
                 Näppäin n = new Näppäin();
@@ -78,6 +79,7 @@ namespace EscapeRoomRedi
                     Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys] = ' ';
                 }
             }
+            Console.ReadKey();
         }
 
         private void LiikutaPelaajaa(char näppäin)
@@ -232,6 +234,7 @@ namespace EscapeRoomRedi
             else
             {
                 Console.WriteLine("Onneksi olkoon, löysit tien ulkoilmaan. Mutta mitä ihmettä, kello on 7.45? Nyt kiireellä takaisin Keilaniemeen.");
+                GameOver = true;
             }
         }
 
@@ -242,6 +245,7 @@ namespace EscapeRoomRedi
                 Console.Write(merkki);
                 Thread.Sleep(20);
             }
+            Console.WriteLine();
         }
     }
 }
