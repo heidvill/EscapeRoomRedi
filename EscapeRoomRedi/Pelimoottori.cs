@@ -24,7 +24,8 @@ namespace EscapeRoomRedi
             int ID = 255;
 
             TulostaMerkkiKerrallaan("Tervetuloa pelaamaan! Mikä on nimesi?");
-            Console.WriteLine("Tervetuloa pelaamaan! Mikä on nimesi?");
+            System.Console.WriteLine();
+            //Console.WriteLine("Tervetuloa pelaamaan! Mikä on nimesi?");
             p.Nimi = Console.ReadLine();
             Console.WriteAscii($"Moi {p.Nimi}!", Color.FromArgb(DA, V, ID));
             Console.WriteLine("Aloita peli painamalla mitä tahansa näppäintä");
@@ -34,6 +35,7 @@ namespace EscapeRoomRedi
             Kartta = new Kartta();
             Kartta.LueKartta();
             Pelaaja = Kartta.Pelaaja;
+            Console.WriteLine("liiku wasd-painikkeilla");
         }
 
         private void TulostaAlkutarina()
@@ -56,7 +58,7 @@ namespace EscapeRoomRedi
             Kartta.TulostaPohja();
             while (true)
             {
-                Console.WriteLine("liiku wasd-painikkeilla");
+                
                 Näppäin n = new Näppäin();
                 char merkki = n.LueNäppäin();
                 if (merkki == 'x') { break; }
