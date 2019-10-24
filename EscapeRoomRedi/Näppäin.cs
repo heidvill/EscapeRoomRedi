@@ -11,7 +11,7 @@ namespace EscapeRoomRedi
 
         public char LueNäppäin()
         {
-            näppäin = Console.ReadKey();
+            näppäin = Console.ReadKey(true);
             input = näppäin.KeyChar;
             return input;
         }
