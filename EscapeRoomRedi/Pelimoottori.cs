@@ -78,7 +78,7 @@ namespace EscapeRoomRedi
                 LiikutaPelaajaa(merkki);
                 if (Taso == 3)
                 {
-                    LiikutaHasselhoffiaSatunnaisesti();
+                    LiikutaHasselhoffiaKohteeseen();
                 }
                 if(viesti != "")
                 {
@@ -293,7 +293,7 @@ namespace EscapeRoomRedi
                 Console.WriteLine("Redin katto, Kalasatama");
                 Console.ReadKey();
                 Console.Clear();
-                Console.WriteLine("Illan traumaattiset tapahtumat ovat tuoneet sinut valinnan äärelle. Voit ottaa riskialttiin pikahissin Itäväylälle tai jatkaa normihissillä tuntemattomaan.");
+                Console.WriteLine("Illan traumaattiset tapahtumat ovat tuoneet sinut valinnan äärelle. \nVoit ottaa riskialttiin pikahissin Itäväylälle tai jatkaa normihissillä tuntemattomaan.");
                 Console.ReadKey();
                 Console.Clear();
                 Kartta.LueKartta();
@@ -360,7 +360,15 @@ namespace EscapeRoomRedi
 
         private void LiikutaHasselhoffiaKohteeseen()
         {
-
+            Random r = new Random();
+            if (r.Next(0, 11) < 5 && hasselhoff.Korkeus != Pelaaja.Korkeus)
+            {
+                if (Pelaaja.Korkeus < hasselhoff.Korkeus) { YritäLiikuttaaPelaajaaYlös(hasselhoff); }
+                else if (Pelaaja.Korkeus > hasselhoff.Korkeus) { YritäLiikuttaaPelaajaaAlas(hasselhoff); }
+            }
+            else
+                if (Pelaaja.Leveys < hasselhoff.Leveys) { YritäLiikuttaaPelaajaaVasemmalle(hasselhoff); }
+                else if (Pelaaja.Leveys > hasselhoff.Leveys) { YritäLiikuttaaPelaajaaOikealle(hasselhoff); }
         }
 
         public void TulostaMerkkiKerrallaan(string tulostettava)
