@@ -27,8 +27,7 @@ namespace EscapeRoomRedi
             int ID = 255;
 
             TulostaAlkuruutu();
-            Console.Clear();
-            Console.SetCursorPosition(20, 10);
+            Console.Clear();            
             TulostaMerkkiKerrallaan("Tervetuloa pelaamaan! Mikä on nimesi?");
             System.Console.WriteLine();
             p.Nimi = Console.ReadLine();
@@ -102,11 +101,9 @@ namespace EscapeRoomRedi
                         TulostaMerkkiKerrallaan("Hasselhoff alkaa laulaa");
                         Console.ReadKey();
                         Console.Clear();
-                        TulostaMerkkiKerrallaan("I've been looking for freedom \nI've been looking so long\nI've been looking for freedom \nStill the search goes on\nI've been looking for freedom \nsince I left my home town \nI've been looking for freedom \nStill it can't be found");
-                        TulostaMerkkiKerrallaan("Redin parkkihalli, Kalasatama");
-                        Console.ReadKey();
-                        Console.Clear();
-                        TulostaMerkkiKerrallaan("Ovi aukesi ja löysit itsesi Redin parkkihallista. \nKuulet vaimeaa örinää. Onko se saksaa? \nNäköpiiriisi osuu humalainen David Hasselhoff. \nHän haluaa laulaa sinulle serenadin. \nVälttele Hoffia ja etsi tie seuraavalle ovelle(X).");
+
+                        TulostaMerkkiKerrallaan("I've been looking for freedom \nI've been looking so long\nI've been looking for freedom \nStill the search goes on\nI've been looking for freedom since I left my home town \nI've been looking for freedom \nStill it can't be found");
+                        TulostaMerkkiKerrallaan("Redin parkkihalli, Kalasatama");                     
 
                         Console.ReadKey();
                         Console.Clear();
@@ -390,8 +387,6 @@ namespace EscapeRoomRedi
             else
             {
                 Console.Clear();
-
-                Console.ReadKey();
                 TulostaMerkkiKerrallaan("Onneksi olkoon, löysit tien takaisin ulkomaailmaan! \nMutta mitä ihmettä, kello on jo 7.45? Nyt kiireellä takaisin Keilaniemeen. \nOnneksi löydät Redin edustalta KITT-auton jolla ajaa auringonnousuun. \nHyvää matkaa!");
                 Console.ReadKey();
                 Console.Clear();
