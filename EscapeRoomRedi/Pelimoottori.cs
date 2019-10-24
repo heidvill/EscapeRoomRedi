@@ -61,10 +61,7 @@ namespace EscapeRoomRedi
             Kartta.TulostaPohja(Taso);
             while (!GameOver)
             {
-<<<<<<< HEAD
-                
-=======
->>>>>>> c1ddabcf904e977c64e45a49f37e85b44b8db486
+
                 Näppäin n = new Näppäin();
                 char merkki = n.LueNäppäin();
                 if (merkki == 'x') { break; }
