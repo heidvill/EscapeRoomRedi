@@ -13,7 +13,7 @@ Escape room -peli, jossa tapahtumapaikkana on Kalasataman Redi-kauppakeskus.
 ### Pelin tasot
 1. Pimeä huone
 2. Kauppakeskuksen kerros avaimilla ja lukitulla ovella
-3. Parkkihalli, jossa Hasselhoff
+3. Parkkihalli, jossa tekoälyllä ohjattu vastustaja
 4. Kerros, jossa hissit vaihtoehtoisiin suuntiin
 5. Kerros, jossa vaihtoehtoiset loppuratkaisut
 
