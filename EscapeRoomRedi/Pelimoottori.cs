@@ -4,6 +4,7 @@ using System.Text;
 using System.Drawing;
 using Console = Colorful.Console;
 using System.Threading;
+using System.IO;
 
 namespace EscapeRoomRedi
 {
@@ -25,6 +26,8 @@ namespace EscapeRoomRedi
             int V = 212;
             int ID = 255;
 
+            TulostaAlkuruutu();
+            Console.Clear();
             TulostaMerkkiKerrallaan("Tervetuloa pelaamaan! Mikä on nimesi?");
             System.Console.WriteLine();
             p.Nimi = Console.ReadLine();
@@ -48,6 +51,18 @@ namespace EscapeRoomRedi
             Console.WriteLine("liiku wasd-painikkeilla");
         }
 
+        private void TulostaAlkuruutu()
+        {
+            string[] lines = File.ReadAllLines(@"../../../alkuruutu.txt");
+            
+            foreach (string line in lines)
+            {
+                Console.WriteLine("\t" + line);
+            }
+            Console.ReadKey();
+
+        }
+
         private void TulostaAlkutarina()
         {
             Console.WriteLine("Keilaniemi, Espoo");
@@ -65,7 +80,7 @@ namespace EscapeRoomRedi
 
         public void PeliSilmukka()
         {
-            Console.WriteLine("Liiku wasd-painikkeilla.");
+            Console.WriteLine("Liiku WASD-painikkeilla.");
             Console.ReadKey();
             Kartta.TulostaPohja(Taso);
             while (!GameOver)
@@ -98,6 +113,14 @@ namespace EscapeRoomRedi
                 {
                     PalaaAlkuun();
                 }
+                if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys] == 'Y')
+                {
+                    TulostaTripla();
+                }
+                if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys] == 'W')
+                {
+                    BbLopetus();
+                }
                 else if ("abcdef".Contains(Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys]))
                 {
                     Pelaaja.Ostoskärry.LisääAvain(Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys]);
@@ -105,6 +128,26 @@ namespace EscapeRoomRedi
                 }               
             }
             Console.ReadKey();
+        }
+
+        public void BbLopetus()
+        {
+            Console.WriteLine($"Tämä on Big Brother. Tervetuloa taloon, {p.Nimi}.");
+            Console.WriteLine("Hävisit pelin.");
+            GameOver = true;
+        }
+
+        private void TulostaTripla()
+        {
+            Console.Clear();
+            string[] lines = File.ReadAllLines(@"../../../tripla.txt");
+
+            foreach (string line in lines)
+            {
+                Console.WriteLine("\t" + line);
+            }
+            Console.ReadKey();
+            GameOver = true;
         }
 
         private void LiikutaPelaajaa(char näppäin)
@@ -298,6 +341,21 @@ namespace EscapeRoomRedi
                 Console.ReadKey();
                 Console.Clear();
                 Console.WriteLine("Illan traumaattiset tapahtumat ovat tuoneet sinut valinnan äärelle. \nVoit ottaa riskialttiin pikahissin Itäväylälle tai jatkaa normihissillä tuntemattomaan.");
+
+                Console.ReadKey();
+                Console.Clear();
+                Kartta.LueKartta();
+                Kartta.TulostaPohja(Taso);
+
+            }
+            else if (Taso == 5)
+            {
+                Kartta.Polku = "../../../Taso5.txt";
+                Console.Clear();
+                Console.WriteLine("Redi, Valintojen maailma");
+                Console.ReadKey();
+                Console.Clear();
+                Console.WriteLine("Olet selvinnyt pimeydestä, lukosta ja David Hasselhoffista.\nTodellinen haaste koittaa vasta nyt. \nNäet neljä ovea joista yksi vie sinut ulos Redistä. \n Kohtalosi voi olla erilainen jos valitset väärän oven.\n Tee valintasi(W,X,Y,Z).");
                 Console.ReadKey();
                 Console.Clear();
                 Kartta.LueKartta();
@@ -306,7 +364,8 @@ namespace EscapeRoomRedi
             }
             else
             {
-                Console.WriteLine("Onneksi olkoon, löysit tien ulkoilmaan. Mutta mitä ihmettä, kello on 7.45? Nyt kiireellä takaisin Keilaniemeen.");
+                Console.Clear();
+                Console.WriteLine("Onneksi olkoon, löysit tien takaisin ulkomaailmaan! \nMutta mitä ihmettä, kello on 7.45? Nyt kiireellä takaisin Keilaniemeen.");
                 GameOver = true;
             }
         }
@@ -322,6 +381,7 @@ namespace EscapeRoomRedi
             Kartta.TulostaPohja(Taso);
    
         }
+
 
         private void LuoHasselhoff()
         {
@@ -382,6 +442,7 @@ namespace EscapeRoomRedi
             if (Pelaaja.Korkeus == hasselhoff.Korkeus && Pelaaja.Leveys == hasselhoff.Leveys) return true;
             return false;
         } 
+
         public void TulostaMerkkiKerrallaan(string tulostettava)
         {
             foreach (char merkki in tulostettava)
