@@ -15,12 +15,19 @@ namespace EscapeRoomRedi
             set
             {
                 value = value.ToLower();
-                string temp = (value[0] + "").ToUpper();
-                if (value.Length > 1)
+                if (value.Length < 1)
                 {
-                    temp += value.Substring(1, value.Length - 1);
+                    nimi = "Pelaaja";
                 }
-                nimi = temp;
+                else
+                {
+                    string temp = (value[0] + "").ToUpper();
+                    if (value.Length > 1)
+                    {
+                        temp += value.Substring(1, value.Length - 1);
+                    }
+                    nimi = temp;
+                }
             }
         }
 
