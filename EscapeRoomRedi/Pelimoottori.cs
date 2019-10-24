@@ -98,19 +98,9 @@ namespace EscapeRoomRedi
                     {
                         Kartta.Polku = "../../../Taso3.txt";
                         Console.Clear();
+                      
+                        HasselhoffLaulaa();
 
-                        TulostaMerkkiKerrallaan("Hasselhoff alkaa laulaa");
-                        Console.ReadKey();
-                        Console.Clear();
-
-                        TulostaMerkkiKerrallaan("I've been looking for freedom \nI've been looking so long\nI've been looking for freedom \nStill the search goes on\nI've been looking for freedom \nsince I left my home town \nI've been looking for freedom \nStill it can't be found");
-                        Console.ReadKey();
-                        Console.Clear();
-                        TulostaMerkkiKerrallaan("Redin parkkihalli, Kalasatama");
-                        Console.ReadKey();
-                        Console.Clear();
-                        TulostaMerkkiKerrallaan("Serenadi tainnutti sinut puoleksi tunniksi. \nHeräät uudelleen parkkihallista. \nHoff haluaa edelleen laulaa.");
-                        Console.ReadKey();
                         Kartta.LueKartta();
                         LuoHasselhoff();
                         Kartta.TulostaPohja(Taso);
@@ -122,28 +112,48 @@ namespace EscapeRoomRedi
                 viesti = "                                          ";
                 Console.SetCursorPosition(0, Kartta.Pohja.GetLength(0));
 
-                if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys] == 'X')
-                {
-                    SeuraavaTaso();
-                }
-                if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys] == 'Z')
-                {
-                    PalaaAlkuun();
-                }
-                if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys] == 'Y')
-                {
-                    TulostaTripla();
-                }
-                if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys] == 'W')
-                {
-                    BbLopetus();
-                }
-                else if ("abcdef".Contains(Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys]))
-                {
-                    Pelaaja.Ostoskärry.LisääAvain(Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys]);
-                    Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys] = ' ';
-                }
+                UusiTapahtuma();
             }
+            Console.ReadKey(true);
+        }
+
+        private void UusiTapahtuma()
+        {
+            if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys] == 'X')
+            {
+                SeuraavaTaso();
+            }
+            if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys] == 'Z')
+            {
+                PalaaAlkuun();
+            }
+            if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys] == 'Y')
+            {
+                TulostaTripla();
+            }
+            if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys] == 'W')
+            {
+                BbLopetus();
+            }
+            else if ("abcdef".Contains(Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys]))
+            {
+                Pelaaja.Ostoskärry.LisääAvain(Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys]);
+                Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys] = ' ';
+            }
+        }
+
+        private void HasselhoffLaulaa()
+        {
+            TulostaMerkkiKerrallaan("Hasselhoff alkaa laulaa");
+            Console.ReadKey();
+            Console.Clear();
+
+            TulostaMerkkiKerrallaan("I've been looking for freedom \nI've been looking so long\nI've been looking for freedom \nStill the search goes on\nI've been looking for freedom since I left my home town \nI've been looking for freedom \nStill it can't be found");
+            TulostaMerkkiKerrallaan("Redin parkkihalli, Kalasatama");
+
+            Console.ReadKey();
+            Console.Clear();
+            TulostaMerkkiKerrallaan("Serenadi tainnutti sinut puoleksi tunniksi. \nHeräät uudelleen parkkihallista. \nHoff haluaa edelleen laulaa.");
             Console.ReadKey();
         }
 
@@ -397,8 +407,32 @@ namespace EscapeRoomRedi
                 Console.Clear();
                 Console.WriteAscii($"Voitit pelin!", Color.FromArgb(DA, V, ID));
                 //tähän tulee KITT
-
+                TulostaKitt();
                 GameOver = true;
+            }
+        }
+
+        private void TulostaKitt()
+        {
+            //Console.Clear();
+            string[] lines = File.ReadAllLines(@"../../../kitt.txt");
+            int korkeus = Console.CursorTop;
+            foreach (string line in lines)
+            {
+                Console.WriteLine(line);
+            }
+            
+            Console.MoveBufferArea(0, korkeus, 47, 8, 50, korkeus);
+
+            for (int i = 50; i > 1; i--)
+            {
+                Console.MoveBufferArea(i, korkeus, 47, 8, i - 1, korkeus);
+                Thread.Sleep(100);
+            }
+            for (int i = 0; i < 47; i++)
+            {
+                Console.MoveBufferArea(1, korkeus, 47-i, 8, 0, korkeus);
+                Thread.Sleep(100);
             }
         }
 
