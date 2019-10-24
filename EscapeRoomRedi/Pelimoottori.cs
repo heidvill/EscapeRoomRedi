@@ -81,7 +81,17 @@ namespace EscapeRoomRedi
                     LiikutaHasselhoffiaKohteeseen();
                     if (TheHoffSaaPelaajanKiinni())
                     {
-                        break;
+                        Kartta.Polku = "../../../Taso3.txt";
+                        Console.Clear();
+                        Console.WriteLine("Redin parkkihalli, Kalasatama");
+                        Console.ReadKey();
+                        Console.Clear();
+                        Console.WriteLine("Ovi aukesi ja löysit itsesi Redin parkkihallista. \nKuulet vaimeaa örinää. Onko se Saksaa? \nNäköpiiriisi osuu humalainen David Hasselhoff. \nHän haluaa laulaa sinulle serenadin. \nVälttele Hoffia ja etsi tie seuraavalle ovelle(X).");
+                        Console.ReadKey();
+                        Console.Clear();
+                        Kartta.LueKartta();
+                        LuoHasselhoff();
+                        Kartta.TulostaPohja(Taso);
                     }
                 }
                 if(viesti != "")
