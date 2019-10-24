@@ -402,10 +402,10 @@ namespace EscapeRoomRedi
             else
             {
                 Console.Clear();
-                TulostaMerkkiKerrallaan("Onneksi olkoon, löysit tien takaisin ulkomaailmaan! \nMutta mitä ihmettä, kello on jo 7.45? Nyt kiireellä takaisin Keilaniemeen. \nOnneksi löydät Redin edustalta KITT-auton jolla ajaa auringonnousuun. \nHyvää matkaa!");
+                TulostaMerkkiKerrallaan($"Onneksi olkoon, {p.Nimi}, löysit tien takaisin ulkomaailmaan! \nMutta mitä ihmettä, kello on jo 7.45? Nyt kiireellä takaisin Keilaniemeen. \nOnneksi löydät Redin edustalta KITT-auton jolla ajaa auringonnousuun. \nHyvää matkaa, {p.Nimi}!");
                 Console.ReadKey();
                 Console.Clear();
-                Console.WriteAscii($"Voitit pelin!", Color.FromArgb(DA, V, ID));
+                Console.WriteAscii($"Voitit pelin, {p.Nimi}!", Color.FromArgb(DA, V, ID));
                 //tähän tulee KITT
                 TulostaKitt();
                 GameOver = true;
