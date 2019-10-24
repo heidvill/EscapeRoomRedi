@@ -4,42 +4,21 @@ using EscapeRoomRedi;
 namespace EscapeRoomTestit
 {
     [TestClass]
-    public class PelaajaTesti
+    public class OstoskärryTesti
     {
         [TestMethod]
-        public void PelaajaLiikkuuYlös()
+        public void OstoskärryssäOnLista()
         {
-            Pelaaja p = new Pelaaja();
-            p.Korkeus = 2;
-            p.Ylös();
-            Assert.AreEqual(1, p.Korkeus, "Pelaaja ei liikkunut ylöspäin");
+            Ostoskärry o = new Ostoskärry();
+            Assert.IsNotNull(o.Avaimet);
         }
 
         [TestMethod]
-        public void PelaajaLiikkuuAlas()
+        public void AvaimenLisäysToimii()
         {
-            Pelaaja p = new Pelaaja();
-            p.Korkeus = 2;
-            p.Alas();
-            Assert.AreEqual(3, p.Korkeus, "Pelaaja ei liikkunut alaspäin");
-        }
-
-        [TestMethod]
-        public void PelaajaLiikkuuVasemmalle()
-        {
-            Pelaaja p = new Pelaaja();
-            p.Leveys = 2;
-            p.Vasen();
-            Assert.AreEqual(1, p.Leveys, "Pelaaja ei liikkunut vasemmalle");
-        }
-
-        [TestMethod]
-        public void PelaajaLiikkuuOikealle()
-        {
-            Pelaaja p = new Pelaaja();
-            p.Leveys = 2;
-            p.Oikea();
-            Assert.AreEqual(3, p.Leveys, "Pelaaja ei liikkunut oikealle");
+            Ostoskärry o = new Ostoskärry();
+            o.LisääAvain('a');
+            Assert.AreEqual(1, o.Avaimet.Count, "Avaimia on väärä määrä");
         }
     }
 }
