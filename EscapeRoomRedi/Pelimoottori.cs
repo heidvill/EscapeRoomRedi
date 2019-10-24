@@ -437,7 +437,7 @@ namespace EscapeRoomRedi
         {
             Random r = new Random();
 
-            if ((r.Next(0, 11) < 5 && hasselhoff.Korkeus != Pelaaja.Korkeus) || hasselhoff.Leveys == Pelaaja.Leveys)
+            if ((r.Next(0, 11) >= 5 && hasselhoff.Korkeus != Pelaaja.Korkeus) || hasselhoff.Leveys == Pelaaja.Leveys)
             {
                 if (Pelaaja.Korkeus < hasselhoff.Korkeus) { YritäLiikuttaaPelaajaaYlös(hasselhoff); }
                 else if (Pelaaja.Korkeus > hasselhoff.Korkeus) { YritäLiikuttaaPelaajaaAlas(hasselhoff); }
