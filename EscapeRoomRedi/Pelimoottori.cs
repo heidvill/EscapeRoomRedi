@@ -15,6 +15,7 @@ namespace EscapeRoomRedi
         public Pelaaja Pelaaja { get; set; }
         public int Taso { get; set; } = 1;
         public bool GameOver { get; set; } = false;
+        static char Avain { get; set; }
 
         Pelaaja p = new Pelaaja();
         Pelaaja hasselhoff;
@@ -192,11 +193,11 @@ namespace EscapeRoomRedi
             {
                 Ylös(pelaaja);
             }
-            else if (Kartta.Pohja[pelaaja.Korkeus - 1, pelaaja.Leveys] == '@' && pelaaja.Ostoskärry.Avaimet.Contains('e'))
+            else if (Kartta.Pohja[pelaaja.Korkeus - 1, pelaaja.Leveys] == '@' && pelaaja.Ostoskärry.Avaimet.Contains(Avain))
             {
                 Ylös(pelaaja);
             }
-            else if (Kartta.Pohja[pelaaja.Korkeus - 1, pelaaja.Leveys] == '@' && !pelaaja.Ostoskärry.Avaimet.Contains('e'))
+            else if (Kartta.Pohja[pelaaja.Korkeus - 1, pelaaja.Leveys] == '@' && !pelaaja.Ostoskärry.Avaimet.Contains(Avain))
             {
                 viesti = "Sinulla ei ole oikeaa avainta";
             }
@@ -224,11 +225,11 @@ namespace EscapeRoomRedi
             {
                 Alas(pelaaja);
             }
-            else if (Kartta.Pohja[pelaaja.Korkeus + 1, pelaaja.Leveys] == '@' && pelaaja.Ostoskärry.Avaimet.Contains('e'))
+            else if (Kartta.Pohja[pelaaja.Korkeus + 1, pelaaja.Leveys] == '@' && pelaaja.Ostoskärry.Avaimet.Contains(Avain))
             {
                 Alas(pelaaja);
             }
-            else if (Kartta.Pohja[pelaaja.Korkeus + 1, pelaaja.Leveys] == '@' && !pelaaja.Ostoskärry.Avaimet.Contains('e'))
+            else if (Kartta.Pohja[pelaaja.Korkeus + 1, pelaaja.Leveys] == '@' && !pelaaja.Ostoskärry.Avaimet.Contains(Avain))
             {
                 viesti = "Sinulla ei ole oikeaa avainta";
             }
@@ -255,11 +256,11 @@ namespace EscapeRoomRedi
             {
                 Vasen(pelaaja);
             }
-            else if (Kartta.Pohja[pelaaja.Korkeus, pelaaja.Leveys - 1] == '@' && pelaaja.Ostoskärry.Avaimet.Contains('e'))
+            else if (Kartta.Pohja[pelaaja.Korkeus, pelaaja.Leveys - 1] == '@' && pelaaja.Ostoskärry.Avaimet.Contains(Avain))
             {
                 Vasen(pelaaja);
             }
-            else if (Kartta.Pohja[pelaaja.Korkeus, pelaaja.Leveys - 1] == '@' && !pelaaja.Ostoskärry.Avaimet.Contains('e'))
+            else if (Kartta.Pohja[pelaaja.Korkeus, pelaaja.Leveys - 1] == '@' && !pelaaja.Ostoskärry.Avaimet.Contains(Avain))
             {
                 viesti = "Sinulla ei ole oikeaa avainta";
             }
@@ -287,11 +288,11 @@ namespace EscapeRoomRedi
             {
                 Oikea(pelaaja);
             }
-            else if (Kartta.Pohja[pelaaja.Korkeus, pelaaja.Leveys + 1] == '@' && pelaaja.Ostoskärry.Avaimet.Contains('e'))
+            else if (Kartta.Pohja[pelaaja.Korkeus, pelaaja.Leveys + 1] == '@' && pelaaja.Ostoskärry.Avaimet.Contains(Avain))
             {
                 Oikea(pelaaja);
             }
-            else if (Kartta.Pohja[pelaaja.Korkeus, pelaaja.Leveys + 1] == '@' && !pelaaja.Ostoskärry.Avaimet.Contains('e'))
+            else if (Kartta.Pohja[pelaaja.Korkeus, pelaaja.Leveys + 1] == '@' && !pelaaja.Ostoskärry.Avaimet.Contains(Avain))
             {
                 viesti = "Sinulla ei ole oikeaa avainta";
             }
@@ -329,6 +330,9 @@ namespace EscapeRoomRedi
             if (Taso == 2)
             {
                 Kartta.Polku = "../../../Taso2.txt";
+                char[] avaimet = { 'a', 'b', 'c', 'd', 'e', 'f' };               
+                Random r = new Random();
+                Avain = avaimet[r.Next(0, avaimet.Length)];
                 Console.Clear();
 
                 TulostaMerkkiKerrallaan("Kauppakeskus Redi, Kalasatama");
