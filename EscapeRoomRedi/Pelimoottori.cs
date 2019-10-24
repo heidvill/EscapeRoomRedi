@@ -102,7 +102,7 @@ namespace EscapeRoomRedi
                         TulostaMerkkiKerrallaan("Hasselhoff alkaa laulaa");
                         Console.ReadKey();
                         Console.Clear();
-                        TulostaMerkkiKerrallaan("I've been looking for freedom \nI've been looking so long\nI've been looking for freedom \nStill the search goes on\nI've been looking for freedom since I left my home town \nI've been looking for freedom \nStill it can't be found");
+                        TulostaMerkkiKerrallaan("I've been looking for freedom \nI've been looking so long\nI've been looking for freedom \nStill the search goes on\nI've been looking for freedom \nsince I left my home town \nI've been looking for freedom \nStill it can't be found");
                         TulostaMerkkiKerrallaan("Redin parkkihalli, Kalasatama");
                         Console.ReadKey();
                         Console.Clear();
