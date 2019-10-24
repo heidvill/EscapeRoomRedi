@@ -28,6 +28,7 @@ namespace EscapeRoomRedi
 
             TulostaAlkuruutu();
             Console.Clear();
+            Console.SetCursorPosition(20, 10);
             TulostaMerkkiKerrallaan("Tervetuloa pelaamaan! Mikä on nimesi?");
             System.Console.WriteLine();
             p.Nimi = Console.ReadLine();
@@ -40,7 +41,7 @@ namespace EscapeRoomRedi
                 p.Nimi = "Pelaaja";
                 Console.WriteAscii($"Moi {p.Nimi}!", Color.FromArgb(DA, V, ID));
             }
-            Console.WriteLine("Aloita peli painamalla mitä tahansa näppäintä");
+            TulostaMerkkiKerrallaan("Aloita peli painamalla mitä tahansa näppäintä");
             Console.ReadKey();
             Console.Clear();
             TulostaAlkutarina();
@@ -48,13 +49,12 @@ namespace EscapeRoomRedi
             Kartta.LueKartta();
             Kartta.TulostaPohja(Taso);
             Pelaaja = Kartta.Pelaaja;
-            Console.WriteLine("liiku wasd-painikkeilla");
         }
 
         private void TulostaAlkuruutu()
         {
             string[] lines = File.ReadAllLines(@"../../../alkuruutu.txt");
-            
+
             foreach (string line in lines)
             {
                 Console.WriteLine("\t" + line);
@@ -65,16 +65,16 @@ namespace EscapeRoomRedi
 
         private void TulostaAlkutarina()
         {
-            Console.WriteLine("Keilaniemi, Espoo");
+            TulostaMerkkiKerrallaan("Keilaniemi, Espoo");
             Console.ReadKey();
             Console.Clear();
-            Console.WriteLine($"Olet koodannut koko illan Academyn kampuksella.\nKahvikaan ei enää auta väsymykseen ja päätät lähteä kotiin Itä - Helsinkiin.\nEhdit illan viimeiseen metroon ja juna lähtee liikkeelle. \nLauttasaaren kohdalla silmäluomesi alkavat tuntua raskaalta. \nPilkit unen ja valveen rajamailla kunnes uni vie voiton...\nJatka painamalla mitä tahansa näppäintä");
+            TulostaMerkkiKerrallaan($"Olet koodannut koko illan Academyn kampuksella.\nKahvikaan ei enää auta väsymykseen ja päätät lähteä kotiin Itä - Helsinkiin.\nEhdit illan viimeiseen metroon ja juna lähtee liikkeelle. \nLauttasaaren kohdalla silmäluomesi alkavat tuntua raskaalta. \nPilkit unen ja valveen rajamailla kunnes uni vie voiton...\nJatka painamalla mitä tahansa näppäintä");
             Console.ReadKey();
             Console.Clear();
-            Console.WriteLine("Pimeä huone, Tuntematon sijainti");
+            TulostaMerkkiKerrallaan("Pimeä huone, Tuntematon sijainti");
             Console.ReadKey();
             Console.Clear();
-            Console.WriteLine($"Heräät pimeästä huoneesta. Et ole kotona.\nEt ole myöskään metrossa.\nKännykkäsi valolla löydät huoneesta uloskäynnin(X).\nMihin se mahtaa johtaa?");
+            TulostaMerkkiKerrallaan($"Heräät pimeästä huoneesta. Et ole kotona.\nEt ole myöskään metrossa.\nKännykkäsi valolla löydät huoneesta uloskäynnin(X).\nMihin se mahtaa johtaa?");
             Console.ReadKey();
         }
 
@@ -98,10 +98,10 @@ namespace EscapeRoomRedi
                     {
                         Kartta.Polku = "../../../Taso3.txt";
                         Console.Clear();
-                        Console.WriteLine("Redin parkkihalli, Kalasatama");
+                        TulostaMerkkiKerrallaan("Redin parkkihalli, Kalasatama");
                         Console.ReadKey();
                         Console.Clear();
-                        Console.WriteLine("Ovi aukesi ja löysit itsesi Redin parkkihallista. \nKuulet vaimeaa örinää. Onko se Saksaa? \nNäköpiiriisi osuu humalainen David Hasselhoff. \nHän haluaa laulaa sinulle serenadin. \nVälttele Hoffia ja etsi tie seuraavalle ovelle(X).");
+                        TulostaMerkkiKerrallaan("Ovi aukesi ja löysit itsesi Redin parkkihallista. \nKuulet vaimeaa örinää. Onko se saksaa? \nNäköpiiriisi osuu humalainen David Hasselhoff. \nHän haluaa laulaa sinulle serenadin. \nVälttele Hoffia ja etsi tie seuraavalle ovelle(X).");
                         Console.ReadKey();
                         Console.Clear();
                         Kartta.LueKartta();
@@ -109,11 +109,11 @@ namespace EscapeRoomRedi
                         Kartta.TulostaPohja(Taso);
                     }
                 }
-                if(viesti != "")
-                {
-                    Console.WriteLine(viesti);
-                    viesti = "";
-                }
+
+                Console.SetCursorPosition(0, Kartta.Pohja.GetLength(0) + 1);
+                Console.WriteLine(viesti);
+                viesti = "                                          ";
+                Console.SetCursorPosition(0, Kartta.Pohja.GetLength(0));
 
                 if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys] == 'X')
                 {
@@ -135,14 +135,14 @@ namespace EscapeRoomRedi
                 {
                     Pelaaja.Ostoskärry.LisääAvain(Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys]);
                     Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys] = ' ';
-                }               
+                }
             }
             Console.ReadKey();
         }
 
         public void BbLopetus()
         {
-            Console.WriteLine($"Tämä on Big Brother. Tervetuloa taloon, {p.Nimi}.");
+            TulostaMerkkiKerrallaan($"Tämä on Big Brother. Tervetuloa taloon, {p.Nimi}.");
             Console.WriteLine("Hävisit pelin.");
             GameOver = true;
         }
@@ -297,7 +297,7 @@ namespace EscapeRoomRedi
         private void Oikea(Pelaaja pelaaja)
         {
             char hahmo = 'O';
-            if(pelaaja.Nimi == "H")
+            if (pelaaja.Nimi == "H")
             {
                 hahmo = 'H';
             }
@@ -320,10 +320,10 @@ namespace EscapeRoomRedi
             {
                 Kartta.Polku = "../../../Taso2.txt";
                 Console.Clear();
-                Console.WriteLine("Redi, Kalasatama");
+                TulostaMerkkiKerrallaan("Redi, Kalasatama");
                 Console.ReadKey();
                 Console.Clear();
-                Console.WriteLine("Olet löytänyt itsesi Suomen suurimmasta tahattomasta pakohuoneesta. \nAinoa löytämäsi ovi(X) on lukittu(@). \nHuomaat tyhjissä liiketiloissa yksittäisiä avaimia(a, b, c, d, e, f). \nAvaisikohan jokin niistä lukon(@) vai oletko jumissa ikuisesti ?");
+                TulostaMerkkiKerrallaan("Olet löytänyt itsesi Suomen suurimmasta tahattomasta pakohuoneesta. \nAinoa löytämäsi ovi(X) on lukittu(@). \nHuomaat tyhjissä liiketiloissa yksittäisiä avaimia(a, b, c, d, e, f). \nAvaisikohan jokin niistä lukon(@) vai oletko jumissa ikuisesti ?");
                 Console.ReadKey();
                 Console.Clear();
                 Kartta.LueKartta();
@@ -333,10 +333,10 @@ namespace EscapeRoomRedi
             {
                 Kartta.Polku = "../../../Taso3.txt";
                 Console.Clear();
-                Console.WriteLine("Redin parkkihalli, Kalasatama");
+                TulostaMerkkiKerrallaan("Redin parkkihalli, Kalasatama");
                 Console.ReadKey();
                 Console.Clear();
-                Console.WriteLine("Ovi aukesi ja löysit itsesi Redin parkkihallista. \nKuulet vaimeaa örinää. Onko se Saksaa? \nNäköpiiriisi osuu humalainen David Hasselhoff. \nHän haluaa laulaa sinulle serenadin. \nVälttele Hoffia ja etsi tie seuraavalle ovelle(X).");
+                TulostaMerkkiKerrallaan("Ovi aukesi ja löysit itsesi Redin parkkihallista. \nKuulet vaimeaa örinää. Onko se Saksaa? \nNäköpiiriisi osuu humalainen David Hasselhoff. \nHän haluaa laulaa sinulle serenadin. \nVälttele Hoffia ja etsi tie seuraavalle ovelle(X).");
                 Console.ReadKey();
                 Console.Clear();
                 Kartta.LueKartta();
@@ -347,10 +347,10 @@ namespace EscapeRoomRedi
             {
                 Kartta.Polku = "../../../Taso4.txt";
                 Console.Clear();
-                Console.WriteLine("Redin katto, Kalasatama");
+                TulostaMerkkiKerrallaan("Redin katto, Kalasatama");
                 Console.ReadKey();
                 Console.Clear();
-                Console.WriteLine("Illan traumaattiset tapahtumat ovat tuoneet sinut valinnan äärelle. \nVoit ottaa riskialttiin pikahissin Itäväylälle tai jatkaa normihissillä tuntemattomaan.");
+                TulostaMerkkiKerrallaan("Illan traumaattiset tapahtumat ovat tuoneet sinut valinnan äärelle. \nVoit ottaa riskialttiin pikahissin Itäväylälle tai jatkaa normihissillä tuntemattomaan.");
 
                 Console.ReadKey();
                 Console.Clear();
@@ -362,10 +362,10 @@ namespace EscapeRoomRedi
             {
                 Kartta.Polku = "../../../Taso5.txt";
                 Console.Clear();
-                Console.WriteLine("Redi, Valintojen maailma");
+                TulostaMerkkiKerrallaan("Redi, Valintojen maailma");
                 Console.ReadKey();
                 Console.Clear();
-                Console.WriteLine("Olet selvinnyt pimeydestä, lukosta ja David Hasselhoffista.\nTodellinen haaste koittaa vasta nyt. \nNäet neljä ovea joista yksi vie sinut ulos Redistä. \n Kohtalosi voi olla erilainen jos valitset väärän oven.\n Tee valintasi(W,X,Y,Z).");
+                TulostaMerkkiKerrallaan("Olet selvinnyt pimeydestä, lukosta ja David Hasselhoffista.\nTodellinen haaste koittaa vasta nyt. \nNäet neljä ovea joista yksi vie sinut ulos Redistä. \nKohtalosi voi olla erilainen jos valitset väärän oven.\nTee valintasi(W,X,Y,Z).");
                 Console.ReadKey();
                 Console.Clear();
                 Kartta.LueKartta();
@@ -375,7 +375,7 @@ namespace EscapeRoomRedi
             else
             {
                 Console.Clear();
-                Console.WriteLine("Onneksi olkoon, löysit tien takaisin ulkomaailmaan! \nMutta mitä ihmettä, kello on 7.45? Nyt kiireellä takaisin Keilaniemeen.");
+                TulostaMerkkiKerrallaan("Onneksi olkoon, löysit tien takaisin ulkomaailmaan! \nMutta mitä ihmettä, kello on 7.45? Nyt kiireellä takaisin Keilaniemeen.");
                 GameOver = true;
             }
         }
@@ -383,13 +383,13 @@ namespace EscapeRoomRedi
         public void PalaaAlkuun()
         {
             Console.Clear();
-            Console.WriteLine("Voi rähmä. Kompastuit ja putosit kattoikkunan läpi takaisin pimeään huoneeseen josta aloitit..");
+            TulostaMerkkiKerrallaan("Voi rähmä. Kompastuit ja putosit kattoikkunan läpi takaisin pimeään huoneeseen josta aloitit..");
             Console.ReadKey();
             Taso = 1;
             Kartta.Polku = "../../../Taso1.txt";
             Kartta.LueKartta();
             Kartta.TulostaPohja(Taso);
-   
+
         }
 
 
@@ -401,7 +401,7 @@ namespace EscapeRoomRedi
             hasselhoff.Korkeus = r.Next(0, Kartta.Pohja.GetLength(0));
             hasselhoff.Leveys = r.Next(0, Kartta.Pohja.GetLength(1));
             char merkki = Kartta.Pohja[hasselhoff.Korkeus, hasselhoff.Leveys];
-            while (merkki=='#' || merkki == 'O')
+            while (merkki == '#' || merkki == 'O')
             {
                 hasselhoff.Korkeus = r.Next(0, Kartta.Pohja.GetLength(0));
                 hasselhoff.Leveys = r.Next(0, Kartta.Pohja.GetLength(1));
@@ -415,7 +415,7 @@ namespace EscapeRoomRedi
         {
             Random r = new Random();
             int suunta = r.Next(0, 4);
-            if(suunta == 0) // ylös
+            if (suunta == 0) // ylös
             {
                 YritäLiikuttaaPelaajaaYlös(hasselhoff);
             }
@@ -444,21 +444,27 @@ namespace EscapeRoomRedi
             }
             else
                 if (Pelaaja.Leveys < hasselhoff.Leveys) { YritäLiikuttaaPelaajaaVasemmalle(hasselhoff); }
-                else if (Pelaaja.Leveys > hasselhoff.Leveys) { YritäLiikuttaaPelaajaaOikealle(hasselhoff); }
+            else if (Pelaaja.Leveys > hasselhoff.Leveys) { YritäLiikuttaaPelaajaaOikealle(hasselhoff); }
         }
 
         private bool TheHoffSaaPelaajanKiinni()
         {
             if (Pelaaja.Korkeus == hasselhoff.Korkeus && Pelaaja.Leveys == hasselhoff.Leveys) return true;
             return false;
-        } 
+        }
 
         public void TulostaMerkkiKerrallaan(string tulostettava)
         {
+            int millisekunnit = 50;
             foreach (char merkki in tulostettava)
             {
                 Console.Write(merkki);
-                Thread.Sleep(20);
+                Thread.Sleep(millisekunnit);
+                if (Console.KeyAvailable)
+                {
+                    millisekunnit = 0;
+                    Console.ReadKey(true);
+                }
             }
             Console.WriteLine();
         }
