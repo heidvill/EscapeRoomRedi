@@ -103,7 +103,7 @@ namespace EscapeRoomRedi
                         {
                             c = Color.Red;
                         }
-                        else if ("|_\\/<".Contains(Pohja[i, j]))
+                        else if ("|_\\-/<".Contains(Pohja[i, j]))
                         {
                             c = Color.Orange;
                         }
