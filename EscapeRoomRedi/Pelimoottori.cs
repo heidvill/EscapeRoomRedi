@@ -127,7 +127,6 @@ namespace EscapeRoomRedi
             {
                 Console.WriteLine("\t" + line);
             }
-            Console.ReadKey();
             GameOver = true;
         }
 
