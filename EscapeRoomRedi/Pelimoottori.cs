@@ -79,6 +79,10 @@ namespace EscapeRoomRedi
                 if (Taso == 3)
                 {
                     LiikutaHasselhoffiaKohteeseen();
+                    if (TheHoffSaaPelaajanKiinni())
+                    {
+                        break;
+                    }
                 }
                 if(viesti != "")
                 {
@@ -98,7 +102,7 @@ namespace EscapeRoomRedi
                 {
                     Pelaaja.Ostoskärry.LisääAvain(Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys]);
                     Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys] = ' ';
-                }
+                }               
             }
             Console.ReadKey();
         }
@@ -309,8 +313,9 @@ namespace EscapeRoomRedi
 
         public void PalaaAlkuun()
         {
-
+            Console.Clear();
             Console.WriteLine("Voi rähmä. Kompastuit ja putosit kattoikkunan läpi takaisin pimeään huoneeseen josta aloitit..");
+            Console.ReadKey();
             Taso = 1;
             Kartta.Polku = "../../../Taso1.txt";
             Kartta.LueKartta();
@@ -361,7 +366,8 @@ namespace EscapeRoomRedi
         private void LiikutaHasselhoffiaKohteeseen()
         {
             Random r = new Random();
-            if (r.Next(0, 11) < 5 && hasselhoff.Korkeus != Pelaaja.Korkeus)
+
+            if ((r.Next(0, 11) < 5 && hasselhoff.Korkeus != Pelaaja.Korkeus) || hasselhoff.Leveys == Pelaaja.Leveys)
             {
                 if (Pelaaja.Korkeus < hasselhoff.Korkeus) { YritäLiikuttaaPelaajaaYlös(hasselhoff); }
                 else if (Pelaaja.Korkeus > hasselhoff.Korkeus) { YritäLiikuttaaPelaajaaAlas(hasselhoff); }
@@ -371,6 +377,11 @@ namespace EscapeRoomRedi
                 else if (Pelaaja.Leveys > hasselhoff.Leveys) { YritäLiikuttaaPelaajaaOikealle(hasselhoff); }
         }
 
+        private bool TheHoffSaaPelaajanKiinni()
+        {
+            if (Pelaaja.Korkeus == hasselhoff.Korkeus && Pelaaja.Leveys == hasselhoff.Leveys) return true;
+            return false;
+        } 
         public void TulostaMerkkiKerrallaan(string tulostettava)
         {
             foreach (char merkki in tulostettava)
