@@ -99,7 +99,7 @@ namespace EscapeRoomRedi
                         {
                             c = Color.Gray;
                         }
-                        else if (Pohja[i, j] == 'X')
+                        else if ("XYZW".Contains(Pohja[i, j]))
                         {
                             c = Color.Red;
                         }
