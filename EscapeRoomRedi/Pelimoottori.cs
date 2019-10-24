@@ -347,7 +347,7 @@ namespace EscapeRoomRedi
                 TulostaMerkkiKerrallaan("Redin parkkihalli, Kalasatama");
                 Console.ReadKey();
                 Console.Clear();
-                TulostaMerkkiKerrallaan("Ovi aukesi ja löysit itsesi Redin parkkihallista. \nKuulet vaimeaa örinää. Onko se Saksaa? \nNäköpiiriisi osuu humalainen David Hasselhoff. \nHän haluaa laulaa sinulle serenadin. \nVälttele Hoffia ja etsi tie seuraavalle ovelle(X).");
+                TulostaMerkkiKerrallaan("Ovi aukesi ja löysit itsesi Redin parkkihallista. \nKuulet vaimeaa örinää. Onko se saksaa? \nNäköpiiriisi osuu humalainen David Hasselhoff. \nHän haluaa laulaa sinulle serenadin. \nVälttele Hoffia ja etsi tie seuraavalle ovelle(X).");
                 Console.ReadKey();
                 Console.Clear();
                 Kartta.LueKartta();
