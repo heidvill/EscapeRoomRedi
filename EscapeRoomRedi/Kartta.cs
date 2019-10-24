@@ -13,6 +13,7 @@ namespace EscapeRoomRedi
     {
         public char[,] Pohja { get; set; }
         public Pelaaja Pelaaja { get; set; }
+        public Pelaaja Hasselhoff { get; set; }
 
         public List<char> Esteet { get; set; }
         public string Polku { get; set; }
@@ -86,6 +87,10 @@ namespace EscapeRoomRedi
                     if (i == Pelaaja.Korkeus && j == Pelaaja.Leveys)
                     {
                         Console.Write("O");
+                    }
+                    else if (taso == 3 && i ==Hasselhoff.Korkeus && j == Hasselhoff.Leveys)
+                    {
+                        Console.Write("H");
                     }
                     else
                     {

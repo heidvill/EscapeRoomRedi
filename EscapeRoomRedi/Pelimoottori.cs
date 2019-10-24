@@ -17,6 +17,7 @@ namespace EscapeRoomRedi
         public bool GameOver { get; set; } = false;
 
         Pelaaja p = new Pelaaja();
+        Pelaaja hasselhoff;
         private string viesti = "";
 
         public void AloitaPeli()
@@ -28,9 +29,17 @@ namespace EscapeRoomRedi
             TulostaAlkuruutu();
             Console.Clear();
             TulostaMerkkiKerrallaan("Tervetuloa pelaamaan! Mikä on nimesi?");
-            //Console.WriteLine("Tervetuloa pelaamaan! Mikä on nimesi?");
+            System.Console.WriteLine();
             p.Nimi = Console.ReadLine();
-            Console.WriteAscii($"Moi {p.Nimi}!", Color.FromArgb(DA, V, ID));
+            try
+            {
+                Console.WriteAscii($"Moi {p.Nimi}!", Color.FromArgb(DA, V, ID));
+            }
+            catch
+            {
+                p.Nimi = "Pelaaja";
+                Console.WriteAscii($"Moi {p.Nimi}!", Color.FromArgb(DA, V, ID));
+            }
             Console.WriteLine("Aloita peli painamalla mitä tahansa näppäintä");
             Console.ReadKey();
             Console.Clear();
@@ -39,6 +48,7 @@ namespace EscapeRoomRedi
             Kartta.LueKartta();
             Kartta.TulostaPohja(Taso);
             Pelaaja = Kartta.Pelaaja;
+            Console.WriteLine("liiku wasd-painikkeilla");
         }
 
         private void TulostaAlkuruutu()
@@ -75,11 +85,30 @@ namespace EscapeRoomRedi
             Kartta.TulostaPohja(Taso);
             while (!GameOver)
             {
+
                 Näppäin n = new Näppäin();
                 char merkki = n.LueNäppäin();
                 if (merkki == 'x') { break; }
 
                 LiikutaPelaajaa(merkki);
+                if (Taso == 3)
+                {
+                    LiikutaHasselhoffiaKohteeseen();
+                    if (TheHoffSaaPelaajanKiinni())
+                    {
+                        Kartta.Polku = "../../../Taso3.txt";
+                        Console.Clear();
+                        Console.WriteLine("Redin parkkihalli, Kalasatama");
+                        Console.ReadKey();
+                        Console.Clear();
+                        Console.WriteLine("Ovi aukesi ja löysit itsesi Redin parkkihallista. \nKuulet vaimeaa örinää. Onko se Saksaa? \nNäköpiiriisi osuu humalainen David Hasselhoff. \nHän haluaa laulaa sinulle serenadin. \nVälttele Hoffia ja etsi tie seuraavalle ovelle(X).");
+                        Console.ReadKey();
+                        Console.Clear();
+                        Kartta.LueKartta();
+                        LuoHasselhoff();
+                        Kartta.TulostaPohja(Taso);
+                    }
+                }
                 if(viesti != "")
                 {
                     Console.WriteLine(viesti);
@@ -106,7 +135,7 @@ namespace EscapeRoomRedi
                 {
                     Pelaaja.Ostoskärry.LisääAvain(Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys]);
                     Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys] = ' ';
-                }
+                }               
             }
             Console.ReadKey();
         }
@@ -135,33 +164,33 @@ namespace EscapeRoomRedi
             switch (näppäin)
             {
                 case 'w':
-                    YritäLiikuttaaPelaajaaYlös();
+                    YritäLiikuttaaPelaajaaYlös(Pelaaja);
                     break;
                 case 's':
-                    YritäLiikuttaaPelaajaaAlas();
+                    YritäLiikuttaaPelaajaaAlas(Pelaaja);
                     break;
                 case 'a':
-                    YritäLiikuttaaPelaajaaVasemmalle();
+                    YritäLiikuttaaPelaajaaVasemmalle(Pelaaja);
                     break;
                 case 'd':
-                    YritäLiikuttaaPelaajaaOikealle();
+                    YritäLiikuttaaPelaajaaOikealle(Pelaaja);
                     break;
                 default:
                     break;
             }
         }
 
-        private void YritäLiikuttaaPelaajaaYlös()
+        private void YritäLiikuttaaPelaajaaYlös(Pelaaja pelaaja)
         {
-            if (!Kartta.Esteet.Contains(Kartta.Pohja[Pelaaja.Korkeus - 1, Pelaaja.Leveys]))
+            if (!Kartta.Esteet.Contains(Kartta.Pohja[pelaaja.Korkeus - 1, pelaaja.Leveys]))
             {
-                Ylös();
+                Ylös(pelaaja);
             }
-            else if (Kartta.Pohja[Pelaaja.Korkeus - 1, Pelaaja.Leveys] == '@' && Pelaaja.Ostoskärry.Avaimet.Contains('e'))
+            else if (Kartta.Pohja[pelaaja.Korkeus - 1, pelaaja.Leveys] == '@' && pelaaja.Ostoskärry.Avaimet.Contains('e'))
             {
-                Ylös();
+                Ylös(pelaaja);
             }
-            else if (Kartta.Pohja[Pelaaja.Korkeus - 1, Pelaaja.Leveys] == '@' && !Pelaaja.Ostoskärry.Avaimet.Contains('e'))
+            else if (Kartta.Pohja[pelaaja.Korkeus - 1, pelaaja.Leveys] == '@' && !pelaaja.Ostoskärry.Avaimet.Contains('e'))
             {
                 viesti = "Sinulla ei ole oikeaa avainta";
             }
@@ -169,79 +198,62 @@ namespace EscapeRoomRedi
 
         }
 
-        private void Ylös()
+        private void Ylös(Pelaaja pelaaja)
         {
-            Console.SetCursorPosition(Pelaaja.Leveys, Pelaaja.Korkeus);
+            char hahmo = 'O';
+            if (pelaaja.Nimi == "H")
+            {
+                hahmo = 'H';
+            }
+            Console.SetCursorPosition(pelaaja.Leveys, pelaaja.Korkeus);
             Console.Write(' ');
-            Pelaaja.Ylös();
-            Console.SetCursorPosition(Pelaaja.Leveys, Pelaaja.Korkeus);
-            Console.Write('O');
+            pelaaja.Ylös();
+            Console.SetCursorPosition(pelaaja.Leveys, pelaaja.Korkeus);
+            Console.Write(hahmo);
         }
 
-        private void YritäLiikuttaaPelaajaaAlas()
+        private void YritäLiikuttaaPelaajaaAlas(Pelaaja pelaaja)
         {
-            if (!Kartta.Esteet.Contains(Kartta.Pohja[Pelaaja.Korkeus + 1, Pelaaja.Leveys]))
+            if (!Kartta.Esteet.Contains(Kartta.Pohja[pelaaja.Korkeus + 1, pelaaja.Leveys]))
             {
-                Alas();
+                Alas(pelaaja);
             }
-            else if (Kartta.Pohja[Pelaaja.Korkeus + 1, Pelaaja.Leveys] == '@' && Pelaaja.Ostoskärry.Avaimet.Contains('e'))
+            else if (Kartta.Pohja[pelaaja.Korkeus + 1, pelaaja.Leveys] == '@' && pelaaja.Ostoskärry.Avaimet.Contains('e'))
             {
-                Alas();
+                Alas(pelaaja);
             }
-            else if (Kartta.Pohja[Pelaaja.Korkeus + 1, Pelaaja.Leveys] == '@' && !Pelaaja.Ostoskärry.Avaimet.Contains('e'))
+            else if (Kartta.Pohja[pelaaja.Korkeus + 1, pelaaja.Leveys] == '@' && !pelaaja.Ostoskärry.Avaimet.Contains('e'))
             {
                 viesti = "Sinulla ei ole oikeaa avainta";
             }
             Console.SetCursorPosition(0, Kartta.Pohja.GetLength(0));
         }
 
-        private void Alas()
+        private void Alas(Pelaaja pelaaja)
         {
-            Console.SetCursorPosition(Pelaaja.Leveys, Pelaaja.Korkeus);
+            char hahmo = 'O';
+            if (pelaaja.Nimi == "H")
+            {
+                hahmo = 'H';
+            }
+            Console.SetCursorPosition(pelaaja.Leveys, pelaaja.Korkeus);
             Console.Write(' ');
-            Pelaaja.Alas();
-            Console.SetCursorPosition(Pelaaja.Leveys, Pelaaja.Korkeus);
-            Console.Write('O');
+            pelaaja.Alas();
+            Console.SetCursorPosition(pelaaja.Leveys, pelaaja.Korkeus);
+            Console.Write(hahmo);
         }
 
-        private void YritäLiikuttaaPelaajaaVasemmalle()
+        private void YritäLiikuttaaPelaajaaVasemmalle(Pelaaja pelaaja)
         {
-            if (!Kartta.Esteet.Contains(Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys - 1]))
+            if (!Kartta.Esteet.Contains(Kartta.Pohja[pelaaja.Korkeus, pelaaja.Leveys - 1]))
             {
-                Vasen();
+                Vasen(pelaaja);
             }
-            else if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys - 1] == '@' && Pelaaja.Ostoskärry.Avaimet.Contains('e'))
+            else if (Kartta.Pohja[pelaaja.Korkeus, pelaaja.Leveys - 1] == '@' && pelaaja.Ostoskärry.Avaimet.Contains('e'))
             {
-                Vasen();
+                Vasen(pelaaja);
             }
-            else if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys - 1] == '@' && !Pelaaja.Ostoskärry.Avaimet.Contains('e'))
-            {
-                viesti = "Sinulla ei ole oikeaa avainta";
-            }
-            Console.SetCursorPosition(0, Kartta.Pohja.GetLength(0));
-
-        }
-
-        private void Vasen()
-        {
-            Console.SetCursorPosition(Pelaaja.Leveys, Pelaaja.Korkeus);
-            Console.Write(' ');
-            Pelaaja.Vasen();
-            Console.SetCursorPosition(Pelaaja.Leveys, Pelaaja.Korkeus);
-            Console.Write('O');
-        }
-
-        private void YritäLiikuttaaPelaajaaOikealle()
-        {
-            if (!Kartta.Esteet.Contains(Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys + 1]))
-            {
-                Oikea();
-            }
-            else if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys + 1] == '@' && Pelaaja.Ostoskärry.Avaimet.Contains('e'))
-            {
-                Oikea();
-            }
-            else if (Kartta.Pohja[Pelaaja.Korkeus, Pelaaja.Leveys + 1] == '@' && !Pelaaja.Ostoskärry.Avaimet.Contains('e'))
+            else if (Kartta.Pohja[pelaaja.Korkeus, pelaaja.Leveys - 1] == '@' && !pelaaja.Ostoskärry.Avaimet.Contains('e'))
             {
                 viesti = "Sinulla ei ole oikeaa avainta";
             }
@@ -249,13 +261,50 @@ namespace EscapeRoomRedi
 
         }
 
-        private void Oikea()
+        private void Vasen(Pelaaja pelaaja)
         {
-            Console.SetCursorPosition(Pelaaja.Leveys, Pelaaja.Korkeus);
+            char hahmo = 'O';
+            if (pelaaja.Nimi == "H")
+            {
+                hahmo = 'H';
+            }
+            Console.SetCursorPosition(pelaaja.Leveys, pelaaja.Korkeus);
             Console.Write(' ');
-            Pelaaja.Oikea();
-            Console.SetCursorPosition(Pelaaja.Leveys, Pelaaja.Korkeus);
-            Console.Write('O');
+            pelaaja.Vasen();
+            Console.SetCursorPosition(pelaaja.Leveys, pelaaja.Korkeus);
+            Console.Write(hahmo);
+        }
+
+        private void YritäLiikuttaaPelaajaaOikealle(Pelaaja pelaaja)
+        {
+            if (!Kartta.Esteet.Contains(Kartta.Pohja[pelaaja.Korkeus, pelaaja.Leveys + 1]))
+            {
+                Oikea(pelaaja);
+            }
+            else if (Kartta.Pohja[pelaaja.Korkeus, pelaaja.Leveys + 1] == '@' && pelaaja.Ostoskärry.Avaimet.Contains('e'))
+            {
+                Oikea(pelaaja);
+            }
+            else if (Kartta.Pohja[pelaaja.Korkeus, pelaaja.Leveys + 1] == '@' && !pelaaja.Ostoskärry.Avaimet.Contains('e'))
+            {
+                viesti = "Sinulla ei ole oikeaa avainta";
+            }
+            Console.SetCursorPosition(0, Kartta.Pohja.GetLength(0));
+
+        }
+
+        private void Oikea(Pelaaja pelaaja)
+        {
+            char hahmo = 'O';
+            if(pelaaja.Nimi == "H")
+            {
+                hahmo = 'H';
+            }
+            Console.SetCursorPosition(pelaaja.Leveys, pelaaja.Korkeus);
+            Console.Write(' ');
+            pelaaja.Oikea();
+            Console.SetCursorPosition(pelaaja.Leveys, pelaaja.Korkeus);
+            Console.Write(hahmo);
         }
 
         private char GetKartanMerkki(int rivi, int sarake)
@@ -290,6 +339,7 @@ namespace EscapeRoomRedi
                 Console.ReadKey();
                 Console.Clear();
                 Kartta.LueKartta();
+                LuoHasselhoff();
                 Kartta.TulostaPohja(Taso);
             }
             else if (Taso == 4)
@@ -300,6 +350,7 @@ namespace EscapeRoomRedi
                 Console.ReadKey();
                 Console.Clear();
                 Console.WriteLine("Illan traumaattiset tapahtumat ovat tuoneet sinut valinnan äärelle. \nVoit ottaa riskialttiin pikahissin Itäväylälle tai jatkaa normihissillä tuntemattomaan.");
+
                 Console.ReadKey();
                 Console.Clear();
                 Kartta.LueKartta();
@@ -327,16 +378,79 @@ namespace EscapeRoomRedi
                 GameOver = true;
             }
         }
+
         public void PalaaAlkuun()
         {
-
+            Console.Clear();
             Console.WriteLine("Voi rähmä. Kompastuit ja putosit kattoikkunan läpi takaisin pimeään huoneeseen josta aloitit..");
+            Console.ReadKey();
             Taso = 1;
             Kartta.Polku = "../../../Taso1.txt";
             Kartta.LueKartta();
             Kartta.TulostaPohja(Taso);
    
         }
+
+
+        private void LuoHasselhoff()
+        {
+            Random r = new Random();
+            hasselhoff = new Pelaaja();
+            hasselhoff.Nimi = "H";
+            hasselhoff.Korkeus = r.Next(0, Kartta.Pohja.GetLength(0));
+            hasselhoff.Leveys = r.Next(0, Kartta.Pohja.GetLength(1));
+            char merkki = Kartta.Pohja[hasselhoff.Korkeus, hasselhoff.Leveys];
+            while (merkki=='#' || merkki == 'O')
+            {
+                hasselhoff.Korkeus = r.Next(0, Kartta.Pohja.GetLength(0));
+                hasselhoff.Leveys = r.Next(0, Kartta.Pohja.GetLength(1));
+                merkki = Kartta.Pohja[hasselhoff.Korkeus, hasselhoff.Leveys];
+            }
+            Kartta.Hasselhoff = hasselhoff;
+
+        }
+
+        private void LiikutaHasselhoffiaSatunnaisesti()
+        {
+            Random r = new Random();
+            int suunta = r.Next(0, 4);
+            if(suunta == 0) // ylös
+            {
+                YritäLiikuttaaPelaajaaYlös(hasselhoff);
+            }
+            else if (suunta == 1) // alas
+            {
+                YritäLiikuttaaPelaajaaAlas(hasselhoff);
+            }
+            else if (suunta == 2) // vasen
+            {
+                YritäLiikuttaaPelaajaaVasemmalle(hasselhoff);
+            }
+            else // oikea
+            {
+                YritäLiikuttaaPelaajaaOikealle(hasselhoff);
+            }
+        }
+
+        private void LiikutaHasselhoffiaKohteeseen()
+        {
+            Random r = new Random();
+
+            if ((r.Next(0, 11) < 5 && hasselhoff.Korkeus != Pelaaja.Korkeus) || hasselhoff.Leveys == Pelaaja.Leveys)
+            {
+                if (Pelaaja.Korkeus < hasselhoff.Korkeus) { YritäLiikuttaaPelaajaaYlös(hasselhoff); }
+                else if (Pelaaja.Korkeus > hasselhoff.Korkeus) { YritäLiikuttaaPelaajaaAlas(hasselhoff); }
+            }
+            else
+                if (Pelaaja.Leveys < hasselhoff.Leveys) { YritäLiikuttaaPelaajaaVasemmalle(hasselhoff); }
+                else if (Pelaaja.Leveys > hasselhoff.Leveys) { YritäLiikuttaaPelaajaaOikealle(hasselhoff); }
+        }
+
+        private bool TheHoffSaaPelaajanKiinni()
+        {
+            if (Pelaaja.Korkeus == hasselhoff.Korkeus && Pelaaja.Leveys == hasselhoff.Leveys) return true;
+            return false;
+        } 
 
         public void TulostaMerkkiKerrallaan(string tulostettava)
         {
