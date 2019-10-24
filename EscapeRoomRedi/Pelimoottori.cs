@@ -98,12 +98,20 @@ namespace EscapeRoomRedi
                     {
                         Kartta.Polku = "../../../Taso3.txt";
                         Console.Clear();
+
+                        TulostaMerkkiKerrallaan("Hasselhoff alkaa laulaa");
+                        Console.ReadKey();
+                        Console.Clear();
+                        TulostaMerkkiKerrallaan("I've been looking for freedom \nI've been looking so long\nI've been looking for freedom \nStill the search goes on\nI've been looking for freedom since I left my home town \nI've been looking for freedom \nStill it can't be found");
                         TulostaMerkkiKerrallaan("Redin parkkihalli, Kalasatama");
                         Console.ReadKey();
                         Console.Clear();
                         TulostaMerkkiKerrallaan("Ovi aukesi ja löysit itsesi Redin parkkihallista. \nKuulet vaimeaa örinää. Onko se saksaa? \nNäköpiiriisi osuu humalainen David Hasselhoff. \nHän haluaa laulaa sinulle serenadin. \nVälttele Hoffia ja etsi tie seuraavalle ovelle(X).");
+
                         Console.ReadKey();
                         Console.Clear();
+                        TulostaMerkkiKerrallaan("Serenadi tainnutti sinut puoleksi tunniksi. \nHeräät uudelleen parkkihallista. \nHoff haluaa edelleen laulaa.");
+                        Console.ReadKey();
                         Kartta.LueKartta();
                         LuoHasselhoff();
                         Kartta.TulostaPohja(Taso);
@@ -143,7 +151,7 @@ namespace EscapeRoomRedi
         public void BbLopetus()
         {
             TulostaMerkkiKerrallaan($"Tämä on Big Brother. Tervetuloa taloon, {p.Nimi}.");
-            Console.WriteLine("Hävisit pelin.");
+            TulostaMerkkiKerrallaan("Hävisit pelin.");
             GameOver = true;
         }
 
@@ -156,7 +164,6 @@ namespace EscapeRoomRedi
             {
                 Console.WriteLine("\t" + line);
             }
-            Console.ReadKey();
             GameOver = true;
         }
 
@@ -315,12 +322,19 @@ namespace EscapeRoomRedi
 
         public void SeuraavaTaso()
         {
+
+            int DA = 244;
+            int V = 212;
+            int ID = 255;
+
             Taso++;
             if (Taso == 2)
             {
                 Kartta.Polku = "../../../Taso2.txt";
                 Console.Clear();
-                TulostaMerkkiKerrallaan("Redi, Kalasatama");
+
+                TulostaMerkkiKerrallaan("Kauppakeskus Redi, Kalasatama");
+              
                 Console.ReadKey();
                 Console.Clear();
                 TulostaMerkkiKerrallaan("Olet löytänyt itsesi Suomen suurimmasta tahattomasta pakohuoneesta. \nAinoa löytämäsi ovi(X) on lukittu(@). \nHuomaat tyhjissä liiketiloissa yksittäisiä avaimia(a, b, c, d, e, f). \nAvaisikohan jokin niistä lukon(@) vai oletko jumissa ikuisesti ?");
@@ -365,6 +379,7 @@ namespace EscapeRoomRedi
                 TulostaMerkkiKerrallaan("Redi, Valintojen maailma");
                 Console.ReadKey();
                 Console.Clear();
+
                 TulostaMerkkiKerrallaan("Olet selvinnyt pimeydestä, lukosta ja David Hasselhoffista.\nTodellinen haaste koittaa vasta nyt. \nNäet neljä ovea joista yksi vie sinut ulos Redistä. \nKohtalosi voi olla erilainen jos valitset väärän oven.\nTee valintasi(W,X,Y,Z).");
                 Console.ReadKey();
                 Console.Clear();
@@ -375,7 +390,14 @@ namespace EscapeRoomRedi
             else
             {
                 Console.Clear();
-                TulostaMerkkiKerrallaan("Onneksi olkoon, löysit tien takaisin ulkomaailmaan! \nMutta mitä ihmettä, kello on 7.45? Nyt kiireellä takaisin Keilaniemeen.");
+
+                Console.ReadKey();
+                TulostaMerkkiKerrallaan("Onneksi olkoon, löysit tien takaisin ulkomaailmaan! \nMutta mitä ihmettä, kello on jo 7.45? Nyt kiireellä takaisin Keilaniemeen. \nOnneksi löydät Redin edustalta KITT-auton jolla ajaa auringonnousuun. \nHyvää matkaa!");
+                Console.ReadKey();
+                Console.Clear();
+                Console.WriteAscii($"Voitit pelin!", Color.FromArgb(DA, V, ID));
+                //tähän tulee KITT
+
                 GameOver = true;
             }
         }
@@ -383,7 +405,9 @@ namespace EscapeRoomRedi
         public void PalaaAlkuun()
         {
             Console.Clear();
-            TulostaMerkkiKerrallaan("Voi rähmä. Kompastuit ja putosit kattoikkunan läpi takaisin pimeään huoneeseen josta aloitit..");
+
+            TulostaMerkkiKerrallaan("Voi rähmä. Kompastuit ja putosit kattoikkunan läpi. \nPäädyit takaisin samaan huoneeseen josta aloitit..");
+
             Console.ReadKey();
             Taso = 1;
             Kartta.Polku = "../../../Taso1.txt";
