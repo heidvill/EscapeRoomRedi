@@ -148,7 +148,7 @@ namespace EscapeRoomRedi
             Console.ReadKey();
             Console.Clear();
 
-            TulostaMerkkiKerrallaan("I've been looking for freedom \nI've been looking so long\nI've been looking for freedom \nStill the search goes on\nI've been looking for freedom since I left my home town \nI've been looking for freedom \nStill it can't be found");
+            TulostaMerkkiKerrallaan("I've been looking for freedom \nI've been looking so long\nI've been looking for freedom \nStill the search goes on\nI've been looking for freedom \nsince I left my home town \nI've been looking for freedom \nStill it can't be found");
             Console.ReadKey();
             Console.Clear();
             TulostaMerkkiKerrallaan("Redin parkkihalli, Kalasatama");
@@ -211,7 +211,7 @@ namespace EscapeRoomRedi
             }
             else if (Kartta.Pohja[pelaaja.Korkeus - 1, pelaaja.Leveys] == '@' && !pelaaja.Ostoskärry.Avaimet.Contains(Avain))
             {
-                viesti = "Sinulla ei ole oikeaa avainta";
+                viesti = "Sinulla ei ole oikeaa avainta.";
             }
             Console.SetCursorPosition(0, Kartta.Pohja.GetLength(0));
 
@@ -243,7 +243,7 @@ namespace EscapeRoomRedi
             }
             else if (Kartta.Pohja[pelaaja.Korkeus + 1, pelaaja.Leveys] == '@' && !pelaaja.Ostoskärry.Avaimet.Contains(Avain))
             {
-                viesti = "Sinulla ei ole oikeaa avainta";
+                viesti = "Sinulla ei ole oikeaa avainta.";
             }
             Console.SetCursorPosition(0, Kartta.Pohja.GetLength(0));
         }
@@ -274,7 +274,7 @@ namespace EscapeRoomRedi
             }
             else if (Kartta.Pohja[pelaaja.Korkeus, pelaaja.Leveys - 1] == '@' && !pelaaja.Ostoskärry.Avaimet.Contains(Avain))
             {
-                viesti = "Sinulla ei ole oikeaa avainta";
+                viesti = "Sinulla ei ole oikeaa avainta.";
             }
             Console.SetCursorPosition(0, Kartta.Pohja.GetLength(0));
 
@@ -306,7 +306,7 @@ namespace EscapeRoomRedi
             }
             else if (Kartta.Pohja[pelaaja.Korkeus, pelaaja.Leveys + 1] == '@' && !pelaaja.Ostoskärry.Avaimet.Contains(Avain))
             {
-                viesti = "Sinulla ei ole oikeaa avainta";
+                viesti = "Sinulla ei ole oikeaa avainta.";
             }
             Console.SetCursorPosition(0, Kartta.Pohja.GetLength(0));
 
@@ -351,7 +351,7 @@ namespace EscapeRoomRedi
               
                 Console.ReadKey();
                 Console.Clear();
-                TulostaMerkkiKerrallaan("Olet löytänyt itsesi Suomen suurimmasta tahattomasta pakohuoneesta. \nAinoa löytämäsi ovi(X) on lukittu(@). \nHuomaat tyhjissä liiketiloissa yksittäisiä avaimia(a, b, c, d, e, f). \nAvaisikohan jokin niistä lukon(@) vai oletko jumissa ikuisesti ?");
+                TulostaMerkkiKerrallaan("Olet löytänyt itsesi Suomen suurimmasta tahattomasta pakohuoneesta. \nAinoa löytämäsi ovi(X) on lukittu(@). \nHuomaat tyhjissä liiketiloissa yksittäisiä avaimia(a, b, c, d, e, f). \nAvaisikohan jokin niistä lukon(@) vai oletko jumissa ikuisesti?");
                 Console.ReadKey();
                 Console.Clear();
                 Kartta.LueKartta();
