@@ -169,6 +169,7 @@ namespace EscapeRoomRedi
         private void TulostaTripla()
         {
             Console.Clear();
+            TulostaMerkkiKerrallaan($"Noniin, {p.Nimi}. Löysit oven takaa salaisen metrotunnelin, joka johtaa Pasilaan.\nOjasta allikkoon...");
             string[] lines = File.ReadAllLines(@"../../../tripla.txt");
 
             foreach (string line in lines)
