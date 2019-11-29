@@ -1,6 +1,9 @@
 # EscapeRoomRedi
 Escape room -peli, jossa tapahtumapaikkana on Kalasataman Redi-kauppakeskus.
 
+## Tausta
+Academyn Accelerated Learning Program C# -kurssin viikon 4 ryhmätyö. Aiheena tekstipohjainen seikkailupeli ConsoleApplication-toteutuksella.
+
 ## Rakenne
 ### Pelin osat
 - O pelaaja
